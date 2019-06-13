@@ -19,9 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let color = d3.scaleThreshold()
         .domain([0, 0.15, 0.30, 0.45, 0.55, 0.70, 0.85, 1.0])
-        .range(["lightgray", "#009392", "#39B185", "#9CCB86", "#E9E29C", "#EEB479", "#E88471", "#CF597E"]);
-        // .domain([0.02, 0.04, 0.06, 0.08, 0.10])
-        // .range(["#F0F0F0", "#b2d8d8", "#66b2b2", "#008080", "#006666", "#004c4c"]);
+        .range(["lightgray", "#009392", "#39B185", "#9CCB86", "#E9E29C", "#EEB479", "#E88471", "#CF597E"]); // color scheme 1 (green-red)
+        // .range(["lightgray", "#228B3B", "#6CBA7D", "#CDE5D2", "#FCE1A4", "#FABF7B", "#E05C5C", "#AB1866"]); // color scheme 2 (green-magenta)
+        // .range(["lightgray", "#3C93C2", "#6CB0D6", "#9EC9E2", "#E1F2E3", "#FEB24C", "#FD8D3C", "#FC4E2A"]); // color scheme 3 (blue-orange)
 
     d3.json("assets/data/cb_2018_us_state_5m.json").then(us => {
 
@@ -40,7 +40,21 @@ document.addEventListener("DOMContentLoaded", () => {
             // console.log(filteredData);
             // console.log(srirachaSearchFreqByState);
 
-            const filteredData = data.filter(datum => datum.year === "2006"); // the year is hardcoded right now --> need to use a year variable that will get passed in from outside
+
+            // const filteredData = data.filter(datum => datum.year === "2006"); // the year is hardcoded right now --> need to use a year variable that will get passed in from outside
+            // const filteredData = data.filter(datum => datum.year === "2007"); // the year is hardcoded right now --> need to use a year variable that will get passed in from outside
+            // const filteredData = data.filter(datum => datum.year === "2008"); // the year is hardcoded right now --> need to use a year variable that will get passed in from outside
+            // const filteredData = data.filter(datum => datum.year === "2009"); // the year is hardcoded right now --> need to use a year variable that will get passed in from outside
+            // const filteredData = data.filter(datum => datum.year === "2010"); // the year is hardcoded right now --> need to use a year variable that will get passed in from outside
+            // const filteredData = data.filter(datum => datum.year === "2011"); // the year is hardcoded right now --> need to use a year variable that will get passed in from outside
+            // const filteredData = data.filter(datum => datum.year === "2012"); // the year is hardcoded right now --> need to use a year variable that will get passed in from outside
+            // const filteredData = data.filter(datum => datum.year === "2013"); // the year is hardcoded right now --> need to use a year variable that will get passed in from outside
+            // const filteredData = data.filter(datum => datum.year === "2014"); // the year is hardcoded right now --> need to use a year variable that will get passed in from outside
+            // const filteredData = data.filter(datum => datum.year === "2015"); // the year is hardcoded right now --> need to use a year variable that will get passed in from outside
+            // const filteredData = data.filter(datum => datum.year === "2016"); // the year is hardcoded right now --> need to use a year variable that will get passed in from outside
+            // const filteredData = data.filter(datum => datum.year === "2017"); // the year is hardcoded right now --> need to use a year variable that will get passed in from outside
+            // const filteredData = data.filter(datum => datum.year === "2018"); // the year is hardcoded right now --> need to use a year variable that will get passed in from outside
+            const filteredData = data.filter(datum => datum.year === "2019"); // the year is hardcoded right now --> need to use a year variable that will get passed in from outside
             let srirachaSearchFreqByState = {};
             filteredData.forEach(datum => {
                 if (datum.sriracha === "0" && datum.tabasco === "0") {

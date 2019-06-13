@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    <link rel="stylesheet" href="assets/stylesheets/reset.css">
     <link rel="stylesheet" href="assets/stylesheets/application.css">
 
     <script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>
@@ -14,7 +15,20 @@
 </head>
 
 <body>
-    <h1>Foodie Fever (Under Construction)</h1>
+    <header>
+        <h1>Foodie Fever </h1>
+        <h1>An interactive visualization of food trends</h1>
+    </header>
     
+    <section class="geomap-container">
+        <div id="slider-container">
+            <input type="range" name="year" id="timeslide" min="0" max="13" value="0" step="1">
+            <span id="range">2006</span>
+        </div>
+    </section>
+
+    <footer>
+        <p>This is a footer</p>
+    </footer>
 </body>
 </html>

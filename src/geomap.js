@@ -1,4 +1,11 @@
-export const renderGeoMap = (year) => { // later, this should take in a dataset too
+const geoColor = d3.scaleThreshold()
+    .domain([0, 0.15, 0.30, 0.45, 0.55, 0.70, 0.85, 1.0])
+    .range(["lightgray", "#009392", "#39B185", "#9CCB86", "#E9E29C", "#EEB479", "#E88471", "#CF597E"]); // color scheme 1 (green-red)
+    // .range(["lightgray", "#228B3B", "#6CBA7D", "#CDE5D2", "#FCE1A4", "#FABF7B", "#E05C5C", "#AB1866"]); // color scheme 2 (green-magenta)
+    // .range(["lightgray", "#3C93C2", "#6CB0D6", "#9EC9E2", "#E1F2E3", "#FEB24C", "#FD8D3C", "#FC4E2A"]); // color scheme 3 (blue-orange)
+
+
+export const renderGeoMap = (year = "2006") => { // later, this should take in a dataset too
     const width = 720;
     const height = 500;
 
@@ -13,24 +20,18 @@ export const renderGeoMap = (year) => { // later, this should take in a dataset 
         .attr("width", width)
         .attr("height", height);
 
-    let color = d3.scaleThreshold()
-        .domain([0, 0.15, 0.30, 0.45, 0.55, 0.70, 0.85, 1.0])
-        .range(["lightgray", "#009392", "#39B185", "#9CCB86", "#E9E29C", "#EEB479", "#E88471", "#CF597E"]); // color scheme 1 (green-red)
-    // .range(["lightgray", "#228B3B", "#6CBA7D", "#CDE5D2", "#FCE1A4", "#FABF7B", "#E05C5C", "#AB1866"]); // color scheme 2 (green-magenta)
-    // .range(["lightgray", "#3C93C2", "#6CB0D6", "#9EC9E2", "#E1F2E3", "#FEB24C", "#FD8D3C", "#FC4E2A"]); // color scheme 3 (blue-orange)
-
     d3.json("assets/data/cb_2018_us_state_5m.json").then(us => {
 
         // Note: I should prob refactor the below line later to interpolate the food comparison into the filepath
         d3.csv("assets/data/sriracha/sriracha_vs_tabasco_geo_trended.csv").then(data => {
 
             const filteredData = data.filter(datum => datum.year === year); // refactored to match a variable year, which should come in as a string
-            let srirachaSearchFreqByState = {};
+            let searchFreqByState = {};
             filteredData.forEach(datum => {
                 if (datum.sriracha === "0" && datum.tabasco === "0") {
-                    srirachaSearchFreqByState[datum.Region] = -0.2;
+                    searchFreqByState[datum.Region] = -0.2;
                 } else {
-                    srirachaSearchFreqByState[datum.Region] = parseFloat(datum.sriracha);
+                    searchFreqByState[datum.Region] = parseFloat(datum.sriracha);
                 }
             });
 
@@ -42,13 +43,21 @@ export const renderGeoMap = (year) => { // later, this should take in a dataset 
                 .append("path")
                 .attr("d", path)
                 .style("fill", d => {
-                    let searchFreq = srirachaSearchFreqByState[d.properties.NAME];
-                    return color(searchFreq);
+                    let searchFreq = searchFreqByState[d.properties.NAME];
+                    return geoColor(searchFreq);
                 });
 
         });
     });
 }
+
+// export const updateGeoMap = (year) => {
+
+// };
+
+
+
+
 
 
 

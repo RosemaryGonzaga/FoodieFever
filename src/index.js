@@ -14,8 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     d3.select("#timeslide").on("input", function() {
         document.getElementById("range").innerHTML = year[this.value];
-        // d3.select("svg").remove();  // this takes too long to re-render
+        d3.select("svg").remove();  // this takes too long to re-render
         renderGeoMap(`${year[this.value]}`);
     });
-    renderGeoMap(`2006`);
+    renderGeoMap(`2006`);   // could invoke w/o arg (fct is defined w/ default param)
 });

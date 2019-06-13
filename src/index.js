@@ -10,9 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const width = 720,
         height = 500;
 
-    // console.log(width);
-    // console.log(height);
-
     const projection = d3.geoAlbersUsa()
         .scale(1000)
         .translate([width / 2, height / 2]);
@@ -24,43 +21,63 @@ document.addEventListener("DOMContentLoaded", () => {
         .attr("width", width)
         .attr("height", height);
 
-    // VERSION 5 SYNTAX: PROMISES
-    d3.json("assets/data/us.json").then(us => {
-        // debugger
-        d3.tsv("assets/data/us_unemployment_2008.tsv").then(unemployment => {
+    d3.json("assets/data/cb_2018_us_state_5m.json").then(us => {
 
-            let rateById = {};  // empty object to hold dataset
-            unemployment.forEach(d => {
-                rateById[d.id] = d.rate;    // populate object with each county's rate (retrieve and set at a key of each county's id)
-            });
-            // console.log(rateById);
+        // Note: I should prob refactor the below line later to interpolate the food comparison into the filepath
+        // d3.csv("assets/data/sriracha_tabasco_timeline_2004_to_present.csv").then(hotsauceTimelineData => {
+        // d3.csv("assets/data/sriracha/sriracha_tabasco_geomap_2006.csv").then(hotsauceGeoData2006 => {
+        d3.csv("assets/data/sriracha/sriracha_vs_tabasco_geo_trended.csv").then(srirachaGeoData => {
+            // console.log(us);
+            // console.log(us.objects.cb_2018_us_state_5m);
+            // console.log(topojson.feature(us, us.objects.cb_2018_us_state_5m));
+            console.log(srirachaGeoData);
+            console.log(srirachaGeoData[0]);
+            console.log(srirachaGeoData[srirachaGeoData.length - 1]);
 
             svg.append("g")
-                .attr("class", "counties")
-                .selectAll("path")
-                .data(topojson.feature(us, us.objects.counties).features) // Bind TopoJSON data elements
-                .enter().append("path")
-                .attr("d", path)
-                .style("fill", d => {
-                    let rateValue = rateById[d.id]; // get unemployment rate for the given data point (match by id)
-                    return color(rateValue);    // pass unemployment rate into color function (defined below) to get the correct fill color
-                });
-            // .style("stroke", "black");
-
-            svg.append('path')
-                .datum(topojson.mesh(us, us.objects.states, (a, b) => {
-                    // console.log(us.objects.states);
-                    return a.id !== b.id;
-                }))
                 .attr("class", "states")
-                // .attr("fill", "none")   // inline styling --> right now application.css is dictating the style
-                // .attr("stroke", "white")  // inline styling --> right now application.css is dictating the style
-                .attr("d", path);
-        });
+                .selectAll("path")
+                .data(topojson.feature(us, us.objects.cb_2018_us_state_5m).features)
+                .enter()
+                .append("path")
+                .attr("d", path)
+                .style("fill", "#1a6b1a");  // ultimately, we want to fill the color dynamically
 
-        let color = d3.scaleThreshold()
-            .domain([0.02, 0.04, 0.06, 0.08, 0.10])
-            .range(["#F0F0F0", "#b2d8d8", "#66b2b2", "#008080", "#006666", "#004c4c"]);
-            // .range(["#f2f0f7", "#dadaeb", "#bcbddc", "#9e9ac8", "#756bb1", "#54278f"]);  // different color palette
+            function colorThresholds(year) {
+                
+            }
+        });
     });
+
+
+    // TUTORIAL CODE
+    // d3.json("assets/data/us.json").then(us => {
+    //     d3.tsv("assets/data/us_unemployment_2008.tsv").then(unemployment => {   // load real Google trends data here
+    //         console.log(us.objects.states);
+    //         console.log(unemployment);
+
+    //         let rateById = {};  // empty object to hold dataset
+    //         unemployment.forEach(d => {
+    //             rateById[d.id] = d.rate;    // populate object with each county's rate (retrieve and set at a key of each county's id)
+    //         });
+    //         // console.log(rateById);
+
+    //         svg.append("g")
+    //             .attr("class", "states")
+    //             .selectAll("path")
+    //             .data(topojson.feature(us, us.objects.states).features) // Bind TopoJSON data elements
+    //             .enter().append("path")
+    //             .attr("d", path)
+    //             // .style("fill", d => {
+    //             //     let rateValue = rateById[d.id]; // get unemployment rate for the given data point (match by id)
+    //             //     return color(rateValue);    // pass unemployment rate into color function (defined below) to get the correct fill color
+    //             // });
+    //             .style("fill", "#008080");
+    //     });
+
+    //     let color = d3.scaleThreshold()
+    //         .domain([0.02, 0.04, 0.06, 0.08, 0.10])
+    //         .range(["#F0F0F0", "#b2d8d8", "#66b2b2", "#008080", "#006666", "#004c4c"]);
+    //         // .range(["#f2f0f7", "#dadaeb", "#bcbddc", "#9e9ac8", "#756bb1", "#54278f"]);  // different color palette
+    // });
 });

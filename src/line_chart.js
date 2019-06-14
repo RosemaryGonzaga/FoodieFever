@@ -1,4 +1,5 @@
 export const renderLineChart = dataset => {
+
     const width = 720;
     const height = 500;
     const padding = 40;
@@ -8,13 +9,17 @@ export const renderLineChart = dataset => {
         .attr("height", height);
     
     d3.csv(dataset).then(data => {
-
         // Define x & y scales based on dataset
-        let maxX = data.length;
-        let maxY = 100;
-        let xScale = d3.scaleLinear()
-            .domain([0, maxX])
+        // let maxX = data.length;  // The old way: set x value by datum's in the dataset array
+        // let xScale = d3.scaleLinear()
+        //     .domain([0, maxX])
+        //     .range([padding, width - padding]);
+        
+        let xScale = d3.scaleTime()
+            .domain([new Date(2004, 0, 1), new Date(2019, 0, 6)])
             .range([padding, width - padding]);
+            
+        let maxY = 100;
         let yScale = d3.scaleLinear()
             .domain([0, maxY])
             .range([height - padding, padding]);
@@ -34,22 +39,44 @@ export const renderLineChart = dataset => {
             .call(yAxis);
 
         // Render data as circles on the chart
+        let tabascoData = data.map(datum => {
+            let newRow = Object.assign({}, { Month: datum.Month, tabasco: datum.tabasco });
+            return newRow;
+        });
+        let srirachaData = data.map(datum => {
+            let newRow = Object.assign({}, { Month: datum.Month, sriracha: datum.sriracha });
+            return newRow;
+        });
+        // console.log(data);  // this has an extra key with columns; may need to add this to tabascoData & srirachaData
+        // console.log(tabascoData);
+        // console.log(srirachaData);
+        // console.log(typeof data);
+        // console.log(typeof tabascoData);
+        // console.log(typeof srirachaData);
+        
         svg.selectAll('circle')
-            .data(data)
+            // .data(data)
+            .data(tabascoData)
             .enter()
             .append("circle")
-            .attr("cx", (_, idx) => {
-                debugger
-                return xScale(idx)
+            // .attr("cx", (_, idx) => xScale(idx)) // The old way: set x value by datum's in the dataset array
+            .attr("cx", (datum) => {
+                return xScale(new Date(datum.Month))
             })
             .attr("cy", datum => yScale(datum.tabasco))
             .attr("r", "2")
             .attr("fill", "green");
         svg.selectAll('circle')
-            .data(data)
+            // .data(data)
+            .data(srirachaData)
+            .exit().remove()
             .enter()
+            .join("circle")
             .append("circle")
-            .attr("cx", (_, idx) => xScale(idx))
+            // .attr("cx", (_, idx) => xScale(idx))
+            .attr("cx", (datum) => {
+                return xScale(new Date(datum.Month))
+            })
             .attr("cy", datum => yScale(datum.sriracha))
             .attr("r", "2")
             .attr("fill", "orange");

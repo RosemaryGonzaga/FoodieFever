@@ -4,7 +4,7 @@ const geoColor = d3.scaleThreshold()
     // .range(["lightgray", "#228B3B", "#6CBA7D", "#CDE5D2", "#FCE1A4", "#FABF7B", "#E05C5C", "#AB1866"]); // color scheme 2 (green-magenta)
     // .range(["lightgray", "#3C93C2", "#6CB0D6", "#9EC9E2", "#E1F2E3", "#FEB24C", "#FD8D3C", "#FC4E2A"]); // color scheme 3 (blue-orange)
 
-export const renderGeoMap = () => {
+export const renderGeoMap = (dataset) => {  // renderGeoMap doesn't use dataset directly, but passes it to colorGeoMap()
     const width = 720;
     const height = 500;
 
@@ -28,15 +28,14 @@ export const renderGeoMap = () => {
             .attr("d", path)
             .attr("class", "states")
             .style("fill", "lightgray");
-        colorGeoMap();
+        colorGeoMap(dataset);
     });
 }
 
-export const colorGeoMap = (year = "2006") => { // later, this should take in a dataset too
+export const colorGeoMap = (dataset, year = "2006") => {
 
-    // Note: I should prob refactor the below line later to interpolate the food comparison into the filepath
-    d3.csv("assets/data/sriracha/sriracha_vs_tabasco_geo_trended.csv").then(data => {
-        const filteredData = data.filter(datum => datum.year === year); // year should come in as a string
+    d3.csv(dataset).then(data => {
+        const filteredData = data.filter(datum => datum.year === year);
         let searchFreqByState = {};
         filteredData.forEach(datum => {
             if (datum.sriracha === "0" && datum.tabasco === "0") {
@@ -47,6 +46,7 @@ export const colorGeoMap = (year = "2006") => { // later, this should take in a 
         });
 
         d3.selectAll(".states")
+            .transition().duration(150) // may get rid of this
             .style("fill", d => {
                 let searchFreq = searchFreqByState[d.properties.NAME];
                 return geoColor(searchFreq);

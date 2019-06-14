@@ -1,4 +1,5 @@
 import { renderGeoMap, colorGeoMap } from './geomap';
+import { renderLineChart } from './line_chart';
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -11,13 +12,22 @@ document.addEventListener("DOMContentLoaded", () => {
         "2018", "2019"
     ];
 
-    d3.select("#timeslide").on("input", function() {
-        document.getElementById("range").innerHTML = year[this.value];
-        colorGeoMap(`${year[this.value]}`);
-    });
+    // // This dataset should dynamically change based on the comparison selected
+    // // (Will prob have a menu allowing users to select food comparison)
+    // // Refactor later to assign dataset based on the input value
+    // // ...may need a dictionary or to rename data files to faciliate interpolation
+    // let dataset = "assets/data/sriracha/sriracha_vs_tabasco_geo_trended.csv";
 
-    renderGeoMap();
+    // d3.select("#timeslide").on("input", function() {
+    //     document.getElementById("range").innerHTML = year[this.value];
+    //     colorGeoMap(dataset, `${year[this.value]}`);
+    // });
+
+    // renderGeoMap(dataset);
     
-    // Something to think about later: do I need to clean up event listeners & timers?
-    // Check for closures, memory leak sources?
+    let dataset = "assets/data/sriracha_tabasco_timeline_2004_to_present.csv";
+    renderLineChart(dataset);
 });
+
+// Something to think about later: do I need to clean up event listeners & timers?
+// Check for closures, memory leak sources?

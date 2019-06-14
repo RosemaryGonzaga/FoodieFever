@@ -1,4 +1,4 @@
-import { renderGeoMap } from './geomap';
+import { renderGeoMap, colorGeoMap } from './geomap';
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -14,8 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     d3.select("#timeslide").on("input", function() {
         document.getElementById("range").innerHTML = year[this.value];
-        d3.select("svg").remove();  // this takes too long to re-render
-        renderGeoMap(`${year[this.value]}`);
+        // d3.select("svg").remove();  // this takes too long to re-render
+        // renderGeoMap(`${year[this.value]}`);
+        colorGeoMap(`${year[this.value]}`);
+        // colorGeo
     });
     renderGeoMap(`2006`);   // could invoke w/o arg (fct is defined w/ default param)
+    // colorGeoMap("2006");
 });

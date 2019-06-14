@@ -4,7 +4,6 @@ const geoColor = d3.scaleThreshold()
     // .range(["lightgray", "#228B3B", "#6CBA7D", "#CDE5D2", "#FCE1A4", "#FABF7B", "#E05C5C", "#AB1866"]); // color scheme 2 (green-magenta)
     // .range(["lightgray", "#3C93C2", "#6CB0D6", "#9EC9E2", "#E1F2E3", "#FEB24C", "#FD8D3C", "#FC4E2A"]); // color scheme 3 (blue-orange)
 
-
 export const renderGeoMap = (year = "2006") => { // later, this should take in a dataset too
     const width = 720;
     const height = 500;
@@ -22,38 +21,69 @@ export const renderGeoMap = (year = "2006") => { // later, this should take in a
 
     d3.json("assets/data/cb_2018_us_state_5m.json").then(us => {
 
-        // Note: I should prob refactor the below line later to interpolate the food comparison into the filepath
-        d3.csv("assets/data/sriracha/sriracha_vs_tabasco_geo_trended.csv").then(data => {
+        // // Note: I should prob refactor the below line later to interpolate the food comparison into the filepath
+        // d3.csv("assets/data/sriracha/sriracha_vs_tabasco_geo_trended.csv").then(data => {
 
-            const filteredData = data.filter(datum => datum.year === year); // refactored to match a variable year, which should come in as a string
-            let searchFreqByState = {};
-            filteredData.forEach(datum => {
-                if (datum.sriracha === "0" && datum.tabasco === "0") {
-                    searchFreqByState[datum.Region] = -0.2;
-                } else {
-                    searchFreqByState[datum.Region] = parseFloat(datum.sriracha);
-                }
-            });
+        //     const filteredData = data.filter(datum => datum.year === year); // refactored to match a variable year, which should come in as a string
+        //     let searchFreqByState = {};
+        //     filteredData.forEach(datum => {
+        //         if (datum.sriracha === "0" && datum.tabasco === "0") {
+        //             searchFreqByState[datum.Region] = -0.2;
+        //         } else {
+        //             searchFreqByState[datum.Region] = parseFloat(datum.sriracha);
+        //         }
+        //     });
 
             svg.append("g")
-                .attr("class", "states")
                 .selectAll("path")
                 .data(topojson.feature(us, us.objects.cb_2018_us_state_5m).features)
                 .enter()
                 .append("path")
                 .attr("d", path)
-                .style("fill", d => {
-                    let searchFreq = searchFreqByState[d.properties.NAME];
-                    return geoColor(searchFreq);
-                });
+                .attr("class", "states")
+                .style("fill", "lightgray");
+                // .style("fill", d => {
+                //     // debugger
+                //     let searchFreq = searchFreqByState[d.properties.NAME];
+                //     return geoColor(searchFreq);
+                // });
 
+            colorGeoMap();
         });
-    });
+    // });
 }
 
-// export const updateGeoMap = (year) => {
+export const colorGeoMap = (year = "2006") => {
 
-// };
+    // Note: I should prob refactor the below line later to interpolate the food comparison into the filepath
+    d3.csv("assets/data/sriracha/sriracha_vs_tabasco_geo_trended.csv").then(data => {
+        // debugger
+        const filteredData = data.filter(datum => datum.year === year); // refactored to match a variable year, which should come in as a string
+        let searchFreqByState = {};
+        filteredData.forEach(datum => {
+            if (datum.sriracha === "0" && datum.tabasco === "0") {
+                searchFreqByState[datum.Region] = -0.2;
+            } else {
+                searchFreqByState[datum.Region] = parseFloat(datum.sriracha);
+            }
+        });
+        // debugger
+
+        d3.selectAll(".states")
+            // .style("fill", "red");
+            // .attr("fill", d => {
+            //     debugger
+            //     let searchFreq = searchFreqByState[d.properties.NAME];
+            //     return geoColor(searchFreq);
+            // });
+
+            .style("fill", d => {
+                // debugger
+                let searchFreq = searchFreqByState[d.properties.NAME];
+                return geoColor(searchFreq);
+            });
+    });
+}
 
 
 

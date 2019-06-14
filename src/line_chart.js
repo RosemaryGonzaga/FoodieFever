@@ -1,4 +1,4 @@
-export const renderLineChart = dataset => {
+export const renderScatterPlot = dataset => {
 
     const width = 720;
     const height = 500;
@@ -12,7 +12,7 @@ export const renderLineChart = dataset => {
 
         // Define x & y scales based on dataset
         let xScale = d3.scaleTime()
-            .domain([new Date(2004, 0, 1), new Date(2019, 0, 6)])
+            .domain([new Date(2006, 0, 1), new Date(2019, 0, 6)])
             .range([padding, width - padding]);
             
         let maxY = 100;
@@ -40,6 +40,7 @@ export const renderLineChart = dataset => {
         // ...Not quite sure why it didn't work...might have to do with the datasets being the
         // ...same size and therefore not registering an enter selection.
         // ...This implementation is a workaround that selects, joins, and appends both datasets at the same time.
+        // POTENTIAL REFACTOR LATER: PASS IN VARIABLES (instead of "tabasco", "sriracha")
         let tabascoData = data.map(datum => {
             let newRow = Object.assign({}, { Month: datum.Month, tabasco: datum.tabasco });
             return newRow;
@@ -51,7 +52,7 @@ export const renderLineChart = dataset => {
         let taggedCombinedData = tabascoData.concat(srirachaData);
 
         // Render data as circles on the chart
-        svg.selectAll('circle')
+        svg.selectAll("circle")
             .data(taggedCombinedData)
             .enter()
             .append("circle")
@@ -65,7 +66,7 @@ export const renderLineChart = dataset => {
                     return yScale(datum.sriracha)
                 }
             })
-            .attr("r", "2")
+            .attr("r", "5")
             .attr("fill", datum => {
                 if (datum.tabasco !== undefined) {
                     return "green";
@@ -73,5 +74,29 @@ export const renderLineChart = dataset => {
                     return "orange";
                 }
             });
+        colorScatterPlot(dataset);
     });
+}
+
+export const colorScatterPlot = (dataset, year = "2006") => {
+    const selectFillColor = datum => {
+        let datumYr = datum.Month.split("-")[0];
+        if (datumYr === year) {
+            if (datum.tabasco !== undefined) {
+                return "darkgreen";
+            } else if (datum.sriracha !== undefined) {
+                return "red";
+            }
+        } else {
+            if (datum.tabasco !== undefined) {
+                return "lightgreen";
+            } else if (datum.sriracha !== undefined) {
+                return "orange";
+            }
+        }
+    };
+
+    d3.selectAll("circle")
+        .transition().duration(150) // may get rid of this
+        .style("fill", selectFillColor);
 }

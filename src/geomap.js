@@ -4,7 +4,7 @@ const geoColor = d3.scaleThreshold()
     // .range(["lightgray", "#228B3B", "#6CBA7D", "#CDE5D2", "#FCE1A4", "#FABF7B", "#E05C5C", "#AB1866"]); // color scheme 2 (green-magenta)
     // .range(["lightgray", "#3C93C2", "#6CB0D6", "#9EC9E2", "#E1F2E3", "#FEB24C", "#FD8D3C", "#FC4E2A"]); // color scheme 3 (blue-orange)
 
-export const renderGeoMap = (year = "2006") => { // later, this should take in a dataset too
+export const renderGeoMap = () => {
     const width = 720;
     const height = 500;
 
@@ -20,45 +20,23 @@ export const renderGeoMap = (year = "2006") => { // later, this should take in a
         .attr("height", height);
 
     d3.json("assets/data/cb_2018_us_state_5m.json").then(us => {
-
-        // // Note: I should prob refactor the below line later to interpolate the food comparison into the filepath
-        // d3.csv("assets/data/sriracha/sriracha_vs_tabasco_geo_trended.csv").then(data => {
-
-        //     const filteredData = data.filter(datum => datum.year === year); // refactored to match a variable year, which should come in as a string
-        //     let searchFreqByState = {};
-        //     filteredData.forEach(datum => {
-        //         if (datum.sriracha === "0" && datum.tabasco === "0") {
-        //             searchFreqByState[datum.Region] = -0.2;
-        //         } else {
-        //             searchFreqByState[datum.Region] = parseFloat(datum.sriracha);
-        //         }
-        //     });
-
-            svg.append("g")
-                .selectAll("path")
-                .data(topojson.feature(us, us.objects.cb_2018_us_state_5m).features)
-                .enter()
-                .append("path")
-                .attr("d", path)
-                .attr("class", "states")
-                .style("fill", "lightgray");
-                // .style("fill", d => {
-                //     // debugger
-                //     let searchFreq = searchFreqByState[d.properties.NAME];
-                //     return geoColor(searchFreq);
-                // });
-
-            colorGeoMap();
-        });
-    // });
+        svg.append("g")
+            .selectAll("path")
+            .data(topojson.feature(us, us.objects.cb_2018_us_state_5m).features)
+            .enter()
+            .append("path")
+            .attr("d", path)
+            .attr("class", "states")
+            .style("fill", "lightgray");
+        colorGeoMap();
+    });
 }
 
-export const colorGeoMap = (year = "2006") => {
+export const colorGeoMap = (year = "2006") => { // later, this should take in a dataset too
 
     // Note: I should prob refactor the below line later to interpolate the food comparison into the filepath
     d3.csv("assets/data/sriracha/sriracha_vs_tabasco_geo_trended.csv").then(data => {
-        // debugger
-        const filteredData = data.filter(datum => datum.year === year); // refactored to match a variable year, which should come in as a string
+        const filteredData = data.filter(datum => datum.year === year); // year should come in as a string
         let searchFreqByState = {};
         filteredData.forEach(datum => {
             if (datum.sriracha === "0" && datum.tabasco === "0") {
@@ -67,18 +45,9 @@ export const colorGeoMap = (year = "2006") => {
                 searchFreqByState[datum.Region] = parseFloat(datum.sriracha);
             }
         });
-        // debugger
 
         d3.selectAll(".states")
-            // .style("fill", "red");
-            // .attr("fill", d => {
-            //     debugger
-            //     let searchFreq = searchFreqByState[d.properties.NAME];
-            //     return geoColor(searchFreq);
-            // });
-
             .style("fill", d => {
-                // debugger
                 let searchFreq = searchFreqByState[d.properties.NAME];
                 return geoColor(searchFreq);
             });
@@ -90,23 +59,10 @@ export const colorGeoMap = (year = "2006") => {
 
 
 
-
-
-
     // TUTORIAL CODE
     // Global variables to store slider state and "dictionary" (or reference values for input)
     // var inputValue = null;
     // var month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-    // // Dimensions of visualization (svg)
-    // let width = 700;
-    // let height = 580;
-
-    // // Create SVG canvas (add svg to DOM)
-    // let svg = d3.select('body')
-    //     .append('svg')
-    //     .attr('width', width)
-    //     .attr('height', height);
 
     // // MAP *****************************************************************
 
@@ -137,44 +93,3 @@ export const colorGeoMap = (year = "2006") => {
     //         d3.select('h2').text('');
     //         d3.select(this).attr('class', 'incident');
     //     });
-
-
-    // // EVENT LISTNERS FOR INTERACTIVITY (TIME SLIDER) ******************************************
-    // // Each event listener takes in a callback that's subsequently defined below
-
-    // // When input range changes, update value
-    // d3.select('#timeslide').on('input', function () {     // TEST: will a big arrow function break this? YES (value is undefined)
-    //     update(+this.value);    // what is the '+' for??? code seems to function well without it...
-    // });
-
-    // // Update the fill of each SVG element of class "incident" with value
-    // function update(value) {    // TEST: will a big arrow function break this? maybe b/c of hoisting and/or context binding?
-    //     document.getElementById('range').innerHTML = month[value];   // set the month by indexing into month array at an index of the range's value
-    //     inputValue = month[value];  // update global var
-    //     d3.selectAll('.incident')
-    //         .attr('fill', dateMatch);   // yet to define dateMatch, a fct that will check the inputValue for a match w/ data and return a color if there's a match
-    // }
-
-    // // Function to return a color for data point (based on color match status)
-    // function dateMatch(data, value) {   // why do we need to take in a value parameter if it never gets used? Code works ok without it
-    //     let d = new Date(data.properties.OPEN_DT);  // create a JS Date object using the data
-    //     let m = month[d.getMonth()];    // get month using Date method
-    //     if (inputValue === m) {     // check for match against input value
-    //         this.parentElement.appendChild(this);   // help with layering??? (so it draws last and is on top?)
-    //         return 'red';
-    //     } else {
-    //         return '#999';
-    //     };
-    // }
-
-    // // Set the initial state (when map loads, initial state is set to January)
-    // function initialDate(data, i) {
-    //     let d = new Date(data.properties.OPEN_DT);
-    //     let m = month[d.getMonth()];
-    //     if (m === "January") {
-    //         this.parentElement.appendChild(this);
-    //         return 'red';
-    //     } else {
-    //         return '#999';
-    //     };
-    // }

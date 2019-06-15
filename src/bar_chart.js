@@ -63,6 +63,7 @@ export const renderBarChart = dataset => {
             .data(filteredData)
             .enter()
             .append("rect")
+            .attr("class", "chocolate-bars")
             .attr("x", datum => {
                 let [_, datumMonth] = datum.Month.split("-");
                 return xScale(parseInt(datumMonth) - 1) + 6;    // Adding 6 to center bar graphs for now, but need a better way (also need to offset labels)
@@ -72,8 +73,26 @@ export const renderBarChart = dataset => {
             })
             .attr("width", "36")
             // .attr("width", xScale.bandwidth())
+            .attr("height", "0")
+            .attr("fill", "red")
+            .transition()   // note: transition needs to precede any attributes that are to transition (should also BE preceded by initial values)
+            .duration(750) // hard-coded for now
+            // .ease(d3.easeLinear)
             .attr("height", datum => datum.chocolate)
+            .attr("fill", "orange") // temporary blink of color to highlight the change
+            .transition()
+            .duration(500)
             .attr("fill", "red");
+
+        // exit data
+        svg.selectAll(".chocolate-bars")
+            .transition()
+            .delay(2000)
+            .duration(1000)
+            .attr("fill", "blue")
+            .attr('height', 0)
+            .attr('y', height - padding)
+            .remove();
     });
 
 }

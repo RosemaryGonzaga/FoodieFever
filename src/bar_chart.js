@@ -1,8 +1,15 @@
-export const renderBarChart = dataset => {
+export const renderBarChart = (dataset, food) => {
 
     const width = 650;
-    const height = 400;
-    const padding = 40;
+    // const height = 350;
+    let height = 350;
+    if (["beef", "chicken", "turkey"].includes(food)) {
+        height = 240;
+    } else {
+        height = 350;
+    }
+
+    const padding = 20;
 
     let svg = d3.select(".bar-chart-container").append("svg")
         .attr("width", width)
@@ -13,10 +20,10 @@ export const renderBarChart = dataset => {
         // Define x & y scales based on dataset
         let xScale = d3.scaleLinear()   // should I use scaleBand?
             .domain([0, 12])
-            .range([padding, width - padding]);
+            .range([padding*2, width - padding*2]);
         let xScaleLabels = d3.scaleLinear()   // should I use scaleBand?
             .domain([0, 11])
-            .range([padding + 24, width - padding - 24]);
+            .range([padding*2 + 24, width - padding*2 - 24]);
         let yScale = d3.scaleLinear()
             .domain([0, 100])
             .range([height - padding, padding]);
@@ -41,7 +48,7 @@ export const renderBarChart = dataset => {
             .call(xAxis);
         svg.append("g")
             .attr("class", "axis")
-            .attr("transform", "translate(" + padding + ", 0)")
+            .attr("transform", "translate(" + padding*2 + ", 0)")
             .call(yAxis);
 
         // Render x-axis label separately (for centering); might need a better solution
@@ -61,58 +68,71 @@ export const renderBarChart = dataset => {
                 return datumYr === year;  // hardcoded for now
             });
         };
-        const data2006 = filterData(data, "2006")
-        const data2012 = filterData(data, "2012")
 
-        // let bars = svg.selectAll("rect").data(data2006);
-        // bars.enter()
-
+        let nestedData = {};
+        for (let yr = 2006; yr < 2019; yr++) {
+            nestedData[`${yr}`] = filterData(data, `${yr}`);
+        }
+        
         svg.selectAll("rect")
-            .data(data2006)
+            .data(nestedData["2006"])
             .enter()
             .append("rect")
-            .attr("class", "chocolate-bars")
+            .attr("class", `${food}`)
             .attr("x", datum => {
                 let [_, datumMonth] = datum.Month.split("-");
                 return xScale(parseInt(datumMonth) - 1) + 6;    // Adding 6 to center bar graphs for now, but need a better way (also need to offset labels)
             })
             .attr("y", datum => {
-                return height - padding - datum.chocolate;
+                return yScale(datum[food]);
             })
             .attr("width", "36")
-            // .attr("width", xScale.bandwidth())
             .attr("height", "0")
             .attr("fill", "red")
             .transition()   // note: transition needs to precede any attributes that are to transition (should also BE preceded by initial values)
             .duration(750) // hard-coded for now
-            // .ease(d3.easeLinear)
-            .attr("height", datum => datum.chocolate)
-            .attr("fill", "orange") // temporary blink of color to highlight the change
-            .transition()
-            .duration(500)
-            .attr("fill", "red");
+            .attr("height", datum => height - padding - yScale(datum[food]))
+            // .attr("fill", "orange") // temporary blink of color to highlight the change
+            // .transition()
+            // .duration(500)
+            // .attr("fill", "red");
+
 
         // update data
-        let chocolateBars = d3.selectAll(".chocolate-bars")    // or select by rect
-        // chocolateBars
-        svg.selectAll("rect")
-            .data(data2006)
-            .transition()
-            .delay(2000)
-            .duration(1000)
-            .attr("fill", "green")
-            .attr('height', datum => datum.chocolate)
-            .attr('y', datum => height - padding - datum.chocolate);
+        const updateBars = (newDataset, delay) => {
+            let duration = 700;
+            d3.selectAll(`.${food}`)    // select by "rect" or class
+                .data(newDataset)
+                .transition()
+                .delay(delay)
+                .duration(duration)
+                .attr("height", datum => height - padding - yScale(datum[food]))
+                .attr("y", datum => {
+                    return yScale(datum[food]);
+                })
+                // .attr("fill", "orange") // temporary blink of color to highlight the change
+                // .transition()
+                // .duration(500)
+                // .attr("fill", "red");
+        }
 
-        // exit data
-        svg.selectAll(".chocolate-bars")    // or select by rect
-            .transition()
-            .delay(4000)
-            .duration(1000)
-            .attr("fill", "blue")
-            .attr('height', 0)
-            .attr('y', height - padding)
-            .remove();
+        // temporary animation
+        let delay = 1;
+        for (let yr = 2007; yr < 2019; yr++) {
+            updateBars(nestedData[yr], delay * 700);
+            delay += 1;
+        }
     });
-
 }
+
+
+
+// // exit data
+        // svg.selectAll(".spinach")    // or select by rect
+        //     .transition()
+        //     .delay(4000)
+        //     .duration(1000)
+        //     .attr("fill", "blue")
+        //     .attr('height', 0)
+        //     .attr('y', height - padding)
+        //     .remove();

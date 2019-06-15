@@ -4,7 +4,7 @@ export const renderScatterPlot = dataset => {
     const height = 500;
     const padding = 40;
 
-    let svg = d3.select(".line-chart-container").append("svg")
+    let svg = d3.select(".scatter-plot-container").append("svg")
         .attr("width", width)
         .attr("height", height);
     
@@ -14,10 +14,8 @@ export const renderScatterPlot = dataset => {
         let xScale = d3.scaleTime()
             .domain([new Date(2006, 0, 1), new Date(2019, 0, 6)])
             .range([padding, width - padding]);
-            
-        let maxY = 100;
         let yScale = d3.scaleLinear()
-            .domain([0, maxY])
+            .domain([0, 100])
             .range([height - padding, padding]);
 
         // Define axes based on x & y scales
@@ -80,7 +78,8 @@ export const renderScatterPlot = dataset => {
 
 export const colorScatterPlot = (year = "2006") => {
     const selectFillColor = datum => {
-        let datumYr = datum.Month.split("-")[0];
+        // let datumYr = datum.Month.split("-")[0];
+        let [datumYr] = datum.Month.split("-"); // try out some JS array destructuring
         if (datumYr === year) {
             if (datum.tabasco !== undefined) {
                 return "darkgreen";

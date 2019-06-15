@@ -1,5 +1,6 @@
 import { renderGeoMap, colorGeoMap } from './geomap';
 import { renderScatterPlot, colorScatterPlot } from './scatter_plot';
+import { renderBarChart } from './bar_chart';
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -28,6 +29,9 @@ document.addEventListener("DOMContentLoaded", () => {
     
     let temporalDataset = "assets/data/sriracha/sriracha_tabasco_timeline_2004_to_present.csv";
     renderScatterPlot(temporalDataset);
+
+    let seasonalDataset = "assets/data/seasonal/chocolate.csv";
+    renderBarChart(seasonalDataset);
 });
 
 // Something to think about later: do I need to clean up event listeners & timers?

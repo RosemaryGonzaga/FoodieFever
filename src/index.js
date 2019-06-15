@@ -1,6 +1,5 @@
 import { renderGeoMap, colorGeoMap } from './geomap';
-import { renderScatterPlot, colorScatterPlot } from './line_chart';
-// import { renderLineChart } from './line_chart';
+import { renderScatterPlot, colorScatterPlot } from './scatter_plot';
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -22,14 +21,13 @@ document.addEventListener("DOMContentLoaded", () => {
     d3.select("#timeslide").on("input", function() {
         document.getElementById("range").innerHTML = year[this.value];
         colorGeoMap(geoDataset, `${year[this.value]}`);
-        colorScatterPlot(temporalDataset, `${year[this.value]}`);
+        colorScatterPlot(`${year[this.value]}`);
     });
 
     renderGeoMap(geoDataset);
     
-    let temporalDataset = "assets/data/sriracha_tabasco_timeline_2004_to_present.csv";
+    let temporalDataset = "assets/data/sriracha/sriracha_tabasco_timeline_2004_to_present.csv";
     renderScatterPlot(temporalDataset);
-    // renderLineChart(dataset);
 });
 
 // Something to think about later: do I need to clean up event listeners & timers?

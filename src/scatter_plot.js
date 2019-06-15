@@ -69,16 +69,16 @@ export const renderScatterPlot = dataset => {
             .attr("r", "5")
             .attr("fill", datum => {
                 if (datum.tabasco !== undefined) {
-                    return "green";
+                    return "lightgreen";
                 } else if (datum.sriracha !== undefined) {
                     return "orange";
                 }
             });
-        colorScatterPlot(dataset);
+        colorScatterPlot();
     });
 }
 
-export const colorScatterPlot = (dataset, year = "2006") => {
+export const colorScatterPlot = (year = "2006") => {
     const selectFillColor = datum => {
         let datumYr = datum.Month.split("-")[0];
         if (datumYr === year) {

@@ -55,12 +55,20 @@ export const renderBarChart = dataset => {
             .attr("stroke", "transparent");
 
         // Render data as bars on the chart
-        const filteredData = data.filter(datum => {
-            let [datumYr] = datum.Month.split("-");
-            return datumYr === "2016";  // hardcoded for now
-        });
+        const filterData = (data, year) => {
+            return data.filter(datum => {
+                let [datumYr] = datum.Month.split("-");
+                return datumYr === year;  // hardcoded for now
+            });
+        };
+        const data2006 = filterData(data, "2006")
+        const data2012 = filterData(data, "2012")
+
+        // let bars = svg.selectAll("rect").data(data2006);
+        // bars.enter()
+
         svg.selectAll("rect")
-            .data(filteredData)
+            .data(data2006)
             .enter()
             .append("rect")
             .attr("class", "chocolate-bars")
@@ -84,10 +92,22 @@ export const renderBarChart = dataset => {
             .duration(500)
             .attr("fill", "red");
 
-        // exit data
-        svg.selectAll(".chocolate-bars")
+        // update data
+        let chocolateBars = d3.selectAll(".chocolate-bars")    // or select by rect
+        // chocolateBars
+        svg.selectAll("rect")
+            .data(data2006)
             .transition()
             .delay(2000)
+            .duration(1000)
+            .attr("fill", "green")
+            .attr('height', datum => datum.chocolate)
+            .attr('y', datum => height - padding - datum.chocolate);
+
+        // exit data
+        svg.selectAll(".chocolate-bars")    // or select by rect
+            .transition()
+            .delay(4000)
             .duration(1000)
             .attr("fill", "blue")
             .attr('height', 0)

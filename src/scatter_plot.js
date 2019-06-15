@@ -1,7 +1,7 @@
 export const renderScatterPlot = dataset => {
 
-    const width = 720;
-    const height = 500;
+    const width = 700;
+    const height = 400;
     const padding = 40;
 
     let svg = d3.select(".scatter-plot-container").append("svg")

@@ -2,12 +2,13 @@ export const renderBarChart = (dataset, food) => {
 
     const width = 650;
     // const height = 350;
-    let height = 350;
+    let height = 300;
     if (["beef", "chicken", "turkey"].includes(food)) {
-        height = 240;
-    } else {
-        height = 350;
-    }
+        height = 210;
+    } 
+    // else {
+    //     height = 350;
+    // }
 
     const padding = 20;
 

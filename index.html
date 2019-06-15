@@ -20,23 +20,38 @@
         <h1>An interactive visualization of food trends</h1>
     </header>
 
-    <section class="welcome-page">
+    <main class="main-content">
 
-    </section>
-    
-    <div id="slider-container hidden">
-        <input type="range" name="year" id="timeslide" min="0" max="13" value="0" step="1">
-        <span id="range">2006</span>
-    </div>
+        <section class="welcome-page hidden">
+            <h1>Welcome to Foodie Fever!</h1>
+            <h2>This visualization is intended to help you discover geographic, trended, and seasonal patterns in food data</h2>
+        </section>
+        
+        <div class="" id="slider-container">
+            <input type="range" name="year" id="timeslide" min="0" max="13" value="0" step="1">
+            <span id="range">2006</span>
+        </div>
 
-    <section class="geomap-container hidden"></section>
+        <section class="map-scatter-wrapper">
+            <div class="geomap-container"></div>
+            <div class="scatter-plot-container"></div>
+        </section>
+        <!-- <section class="map-scatter-wrapper hidden">
+            <div class="geomap-container hidden"></div>
+            <div class="scatter-plot-container hidden"></div>
+        </section> -->
+        
+        <section class="bar-chart-container hidden"></section>
 
-    <section class="scatter-plot-container hidden"></section>
-
-    <section class="bar-chart-container"></section>
+    </main>
 
     <footer>
-        <p>This is a footer</p>
+        <div>sources</div>
+        <div class="google-ref">
+            <p>powered by</p>
+            <img src="assets/images/GoogleTrendsLogo.png" alt="">
+        </div>
+        <div>copyright</div>
     </footer>
 </body>
 </html>

@@ -2,8 +2,89 @@
     display: none;
 }
 
+body {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: teal;
+}
+
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    display: flex;
+    align-items: center;
+
+    background-color: purple;
+}
+
+
+.main-content {
+    position: absolute;
+    top: 80px;
+    bottom: 80px;
+    left: 0;
+    right: 0;
+
+    background-color: white;
+}
+
+
+
+
+.map-scatter-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .states {
     stroke: white;
     /* stroke: black; */
     fill: none;
+}
+
+.scatter-plot-container {
+    margin-right: 30px;
+}
+
+
+
+
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+
+    border-top: lightgray;
+}
+
+.google-ref {
+    display: flex;
+    align-items: center;
+}
+
+.google-ref > p {
+    font-family: roboto, sans-serif;
+    font-style: normal;
+    font-weight: 200;
+    color: #58585a;
+    font-size: 24px;
+    margin-left: 20px;
+}
+
+.google-ref > img {
+    height: 50px;
+    margin-left: 10px;
 }

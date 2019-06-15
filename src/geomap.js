@@ -18,7 +18,7 @@ export const renderGeoMap = dataset => {  // renderGeoMap doesn't use dataset di
     const height = 500;
 
     const projection = d3.geoAlbersUsa()
-        .scale(1000)
+        .scale(900)
         .translate([width / 2, height / 2]);
 
     const path = d3.geoPath()

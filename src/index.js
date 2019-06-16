@@ -4,6 +4,31 @@ import { renderBarChart } from './bar_chart';
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    // Add event listeners to nav components (switch to appropriate page)
+    const aboutBtn = document.getElementById("about");
+    aboutBtn.addEventListener("click", switchPage("welcome-page"));
+
+    const exploreBtn = document.getElementById("explore");
+    exploreBtn.addEventListener("click", switchPage("explore-page"));
+
+    const guessBtn = document.getElementById("guess");
+    guessBtn.addEventListener("click", switchPage("guess-page"));
+
+    function switchPage(idName) {   // needs to be a named fct to get hoisted
+        return () => {
+            const pages = document.getElementsByClassName("page");
+            Array.from(pages).forEach(page => { // pages is an HTMLCollection, not a true array
+                if (page.id === idName) {       
+                    page.className = "page";    // remove "hidden" from class name to reveal the page and its contents
+                } else {
+                    if (!page.className.includes("hidden")) {
+                        page.className += " hidden" // hide all other pages
+                    }
+                }
+            });
+        };
+    };
+
     // Years for time slider
     const year = [
         "2006", "2007", "2008", 

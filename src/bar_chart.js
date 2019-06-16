@@ -84,15 +84,16 @@ export const renderBarChart = (dataset, food) => {
                 let [_, datumMonth] = datum.Month.split("-");
                 return xScale(parseInt(datumMonth) - 1) + 6;    // Adding 6 to center bar graphs for now, but need a better way (also need to offset labels)
             })
-            .attr("y", datum => {
-                return yScale(datum[food]);
-            })
             .attr("width", "36")
             .attr("height", "0")
+            .attr("y", height - padding)
             .attr("fill", "red")
             .transition()   // note: transition needs to precede any attributes that are to transition (should also BE preceded by initial values)
-            .duration(750) // hard-coded for now
+            .duration(1000) // hard-coded for now
             .attr("height", datum => height - padding - yScale(datum[food]))
+            .attr("y", datum => {
+                return yScale(datum[food]);
+            });
             // .attr("fill", "orange") // temporary blink of color to highlight the change
             // .transition()
             // .duration(500)

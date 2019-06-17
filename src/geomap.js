@@ -14,8 +14,8 @@ const geoColor = d3.scaleThreshold()
     // .range(["lightgray", "#3C93C2", "#6CB0D6", "#9EC9E2", "#E1F2E3", "#FEB24C", "#FD8D3C", "#FC4E2A"]); // color scheme 3 (blue-orange)
 
 export const renderGeoMap = dataset => {  // renderGeoMap doesn't use dataset directly, but passes it to colorGeoMap()
-    const width = 720;
-    const height = 500;
+    const width = 680;
+    const height = 420;
 
     const projection = d3.geoAlbersUsa()
         .scale(900)

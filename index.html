@@ -40,12 +40,18 @@
 
     <main class="main-content">
 
-        <section class="page" id="welcome-page">
+        <section class="welcome-page page" id="welcome-page">
             <h1>Welcome to Foodie Fever!</h1>
             <h2>This visualization is intended to help you discover geographic, trended, and seasonal patterns in food data</h2>
+            <div class="welcome-choice">
+                <p>Explore geographic trends</p>
+                <p>or</p>
+                <p>Test your data interpretation chops</p>
+            </div>
         </section>
 
         <section class="page hidden" id="explore-page">
+            <div id="explore-title">Tabasco vs. Sriracha</div>
             <div id="explore-top">
                 <div id="geo-color-legend"></div>
                 <div class="" id="slider-container">
@@ -70,7 +76,20 @@
                 <div class="bar-chart-container"></div>
             </div>
             
-            <div class="guess-page-right"></div>
+            <div class="guess-page-right">
+                <div class="drop-elements">
+                    <div>Drop your guess here</div>
+                    <div class="drop-boxes">?</div>
+                    <div class="drop-boxes">?</div>
+                    <div class="drop-boxes">?</div>
+                </div>
+                <div class="drag-elements">
+                    <div>Drag your guess to the matching graph</div>
+                    <div class="drag-boxes">turkey</div>
+                    <div class="drag-boxes">chicken</div>
+                    <div class="drag-boxes">beef</div>
+                </div>
+            </div>
         </section>
 
     </main>

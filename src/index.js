@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     };
 
+
     // Years for time slider
     const year = [
         "2006", "2007", "2008", 
@@ -44,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
         colorScatterPlot(`${year[this.value]}`);
     });
 
-
     // This dataset should dynamically change based on the comparison selected
     // (Will prob have a menu allowing users to select food comparison)
     // Refactor later to assign dataset based on the input value
@@ -55,29 +55,59 @@ document.addEventListener("DOMContentLoaded", () => {
     let temporalDataset = "assets/data/sriracha/sriracha_tabasco_timeline_2004_to_present.csv";
     renderScatterPlot(temporalDataset);
 
-
-    let seasonalDatasetSpinach = "assets/data/seasonal/spinach.csv";
-    let seasonalDatasetKale = "assets/data/seasonal/kale.csv";
-    let seasonalDatasetQuinoa = "assets/data/seasonal/quinoa.csv";
-    let seasonalDatasetChocolate = "assets/data/seasonal/chocolate.csv";
-    let seasonalDatasetVanilla = "assets/data/seasonal/vanilla.csv";
+    
+    // Data and event listeners for bar graphs (need to add more food comparisons)
     let seasonalDatasetBeef = "assets/data/seasonal/beef.csv";
     let seasonalDatasetChicken = "assets/data/seasonal/chicken.csv";
     let seasonalDatasetTurkey = "assets/data/seasonal/turkey.csv";
-    let seasonalDatasetVegetarian = "assets/data/seasonal/vegetarian.csv";
-    let seasonalDatasetVegan = "assets/data/seasonal/vegan.csv";
-
-    // renderBarChart(seasonalDatasetSpinach, "spinach");
-    // renderBarChart(seasonalDatasetKale, "kale");
-    // renderBarChart(seasonalDatasetQuinoa, "quinoa");
-    // renderBarChart(seasonalDatasetChocolate, "chocolate");
-    // renderBarChart(seasonalDatasetVanilla, "vanilla");
-    renderBarChart(seasonalDatasetBeef, "beef");
-    renderBarChart(seasonalDatasetChicken, "chicken");
-    renderBarChart(seasonalDatasetTurkey, "turkey");
-    // renderBarChart(seasonalDatasetVegetarian, "vegetarian");
-    // renderBarChart(seasonalDatasetVegan, "vegan");
+    
+    // NOTE: setBeefCB closes over beefCallback
+    // It's then passed into the renderBarChart function
+    // That function invokes setBeefCB, assigning beefCallback to a function...
+    // ...that will animate the beef bar chart specifically
+    // The same setup applies for the other foods shown...
+    // That way, the event listener below can invoke all three animation functions...
+    // ...at the same time
+    let beefCallback;
+    const setBeefCB = fct => {
+        // debugger
+        beefCallback = fct;
+        // debugger
+    }
+    renderBarChart(seasonalDatasetBeef, "beef", "#482677", setBeefCB);          // fill-color: purple
+    
+    let chickenCallback;
+    const setChickenCB = fct => { chickenCallback = fct; }
+    renderBarChart(seasonalDatasetChicken, "chicken", "#1f968b", setChickenCB); // fill-color: teal
+    
+    let turkeyCallback;
+    const setTurkeyCB = fct => { turkeyCallback = fct; }
+    renderBarChart(seasonalDatasetTurkey, "turkey", "#dbe318", setTurkeyCB);    // fill-color: yellow
+    
+    // debugger
+    d3.select("#play-bar-chart-animation-btn").on("click", () => {
+        beefCallback();
+        chickenCallback();
+        turkeyCallback();
+    });
 });
 
-// Something to think about later: do I need to clean up event listeners & timers?
-// Check for closures, memory leak sources?
+
+// // OTHER DATASETS TO INCORPORATE:
+// let seasonalDatasetSpinach = "assets/data/seasonal/spinach.csv";
+// let seasonalDatasetKale = "assets/data/seasonal/kale.csv";
+// let seasonalDatasetChocolate = "assets/data/seasonal/chocolate.csv";
+// let seasonalDatasetVanilla = "assets/data/seasonal/vanilla.csv";
+// let seasonalDatasetVegetarian = "assets/data/seasonal/vegetarian.csv";
+// let seasonalDatasetVegan = "assets/data/seasonal/vegan.csv";
+// renderBarChart(seasonalDatasetSpinach, "spinach");
+// renderBarChart(seasonalDatasetKale, "kale");
+// renderBarChart(seasonalDatasetChocolate, "chocolate");
+// renderBarChart(seasonalDatasetVanilla, "vanilla");
+// renderBarChart(seasonalDatasetVegetarian, "vegetarian");
+// renderBarChart(seasonalDatasetVegan, "vegan");
+
+
+
+// // Something to think about later: do I need to clean up event listeners & timers?
+// // Check for closures, memory leak sources?

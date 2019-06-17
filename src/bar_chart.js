@@ -1,4 +1,4 @@
-export const renderBarChart = (dataset, food) => {
+export const renderBarChart = (dataset, food, fillColor, setFoodCB) => {
 
     const width = 650;
     // const height = 350;
@@ -6,9 +6,6 @@ export const renderBarChart = (dataset, food) => {
     if (["beef", "chicken", "turkey"].includes(food)) {
         height = 210;
     } 
-    // else {
-    //     height = 350;
-    // }
 
     const padding = 20;
 
@@ -87,17 +84,13 @@ export const renderBarChart = (dataset, food) => {
             .attr("width", "36")
             .attr("height", "0")
             .attr("y", height - padding)
-            .attr("fill", "red")
+            .attr("fill", fillColor)
             .transition()   // note: transition needs to precede any attributes that are to transition (should also BE preceded by initial values)
             .duration(1000) // hard-coded for now
             .attr("height", datum => height - padding - yScale(datum[food]))
             .attr("y", datum => {
                 return yScale(datum[food]);
             });
-            // .attr("fill", "orange") // temporary blink of color to highlight the change
-            // .transition()
-            // .duration(500)
-            // .attr("fill", "red");
 
 
         // update data
@@ -112,29 +105,23 @@ export const renderBarChart = (dataset, food) => {
                 .attr("y", datum => {
                     return yScale(datum[food]);
                 })
-                // .attr("fill", "orange") // temporary blink of color to highlight the change
-                // .transition()
-                // .duration(500)
-                // .attr("fill", "red");
         }
 
-        // temporary animation
-        let delay = 1;
-        for (let yr = 2007; yr < 2019; yr++) {
-            updateBars(nestedData[yr], delay * 700);
-            delay += 1;
+        // This function closes over the nested data for the food that is the subject of this chart rendering
+        // This function will then get passed back out to index.js by setFoodCB...
+        // ...where it will be invoked along with other callbacks for other foods...
+        // ...in the event handler for the play button.
+        function animateBars() { // try returning a callback that closes over the nestedData
+            let delay = 1;
+            for (let yr = 2006; yr < 2019; yr++) {
+                updateBars(nestedData[yr], delay * 700);
+                delay += 1;
+            }
         }
+
+        // setFoodCB was defined in index.js and closed over a specific variable in that file.
+        // Thus, setFoodCB can assign this animateBars function (carrying a reference to a specific dataset)...
+        // ...to that variable.
+        setFoodCB(animateBars);
     });
 }
-
-
-
-// // exit data
-        // svg.selectAll(".spinach")    // or select by rect
-        //     .transition()
-        //     .delay(4000)
-        //     .duration(1000)
-        //     .attr("fill", "blue")
-        //     .attr('height', 0)
-        //     .attr('y', height - padding)
-        //     .remove();

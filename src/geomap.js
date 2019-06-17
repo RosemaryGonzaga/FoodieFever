@@ -55,7 +55,7 @@ export const colorGeoMap = (dataset, year = "2006") => {
         });
 
         d3.selectAll(".states")
-            .transition().duration(150) // may get rid of this
+            // .transition().duration(150) // may get rid of this
             .style("fill", d => {
                 let searchFreq = searchFreqByState[d.properties.NAME];
                 return geoColor(searchFreq);

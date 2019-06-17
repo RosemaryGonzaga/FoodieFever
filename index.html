@@ -40,13 +40,14 @@
 
     <main class="main-content">
 
-        <section class="page hidden" id="welcome-page">
+        <section class="page" id="welcome-page">
             <h1>Welcome to Foodie Fever!</h1>
             <h2>This visualization is intended to help you discover geographic, trended, and seasonal patterns in food data</h2>
         </section>
 
         <section class="page hidden" id="explore-page">
             <div id="explore-top">
+                <div id="geo-color-legend"></div>
                 <div class="" id="slider-container">
                     <input type="range" name="year" id="timeslide" min="0" max="13" value="0" step="1">
                     <span id="range">2006</span>
@@ -59,18 +60,31 @@
         </section>
         
         <section class="page hidden" id="guess-page">
-            <div class="bar-chart-container"></div>
+            <div class="guess-page-left">
+                <div class="bar-chart-header">
+                    <p>Press</p>
+                    <div id="play-bar-chart-animation-btn"><i class="far fa-play-circle"></i></div>
+                    <p>to play through the years:</p>
+                    <p id="bar-chart-year">2006</p>
+                </div>
+                <div class="bar-chart-container"></div>
+            </div>
+            
+            <div class="guess-page-right"></div>
         </section>
 
     </main>
 
     <footer>
-        <div>sources</div>
+        <div>
+            <p>Source for cartographic boundary data:</p>
+            <p>U.S. Census Bureau (2018 Shapefile)</p>
+        </div>
+        <div>Created by Rosemary Gonzaga</div>
         <div class="google-ref">
             <p>powered by</p>
             <img src="assets/images/GoogleTrendsLogo.png" alt="">
         </div>
-        <div>copyright</div>
     </footer>
 </body>
 </html>

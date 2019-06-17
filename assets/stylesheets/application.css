@@ -1,8 +1,14 @@
-.hidden,
+/* .hidden,
 .hidden > div,
 .hidden > div > div {
     display: none;
-}
+    width: 0;
+    height: 0;
+} */
+
+/* Move the above styling to the bottom of this file for precedence */
+
+
 
 body {
     position: fixed;
@@ -28,7 +34,8 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+    background-color: white;
+    z-index: 10;
 }
 
 header > .header-title {
@@ -91,6 +98,8 @@ header i {
 }
 
 
+
+
 /* MAIN SECTION STYLING */
 
 .main-content {
@@ -100,74 +109,113 @@ header i {
     left: 0;
     right: 0;
     display: flex;
-    /* align-items: center; */
+    align-items: center;
     /* justify-content: center; */
 }
 
 
-/* NOTE: adding display flex breaks the toggle page functionality... need to fix! */
-/* #welcome-page { */
+/* NOTE: adding display flex breaks the toggle page functionality... 
+...The content persists even when I try to display a different "page"...
+...Workarounds: 1) Need to select every child element in the hidden container...
+...and make it display: none. 2) Style with CSS class selector instead of id-selector?...
+...don't get rid of id-selector b/c it's needed for event listeners. */
+
 .welcome-page {
-    /* display: flex; */
+    display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
     width: 100vw;
-    /* position: absolute; */
+    height: 470px;
 }
 
-/* .hidden > #welcome-page {
+/* not sure this is doing anything... */
+.hidden > h1,
+.hidden > h2,
+.hidden > div,
+.hidden > div > p,
+.hidden > div > p > a {
     display: none;
-} */
+    width: 0;
+    height: 0;
+}
 
-#welcome-page > h1 {
+.welcome-page > h1 {
+    /* margin-top: 60px; */
     font-size: 40px;
     font-weight: 1400;
 }
 
-#welcome-page > h2 {
+.welcome-page > h2 {
     font-size: 26px;
     font-weight: 600;
     width: 600px;
     text-align: center;
 }
 
-/* .welcome-choice {
+.welcome-choice {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 1000px;
     font-size: 26px;
-} */
+}
 
-/* .welcome-choice > p:first-of-type,
+.welcome-choice > p:first-of-type,
 .welcome-choice > p:last-of-type {
     width: 360px;
+    height: 100px;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.welcome-note {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-style: italic;
+    /* margin-bottom: 60px; */
+}
+
+/* .welcome-note > p > a {
+    font-style: normal;
 } */
 
-#explore-page {
+/* #explore-page { */
+.explore-page {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    width: 100vw;
+    height: 700px;
 }
 
-#explore-title {
+/* #explore-title { */
+.explore-title {
     font-size: 32px;
     font-weight: 1000;
 }
 
-#explore-top {
+/* #explore-top { */
+.explore-top {
     /* margin-top: 20px; */
     display: flex;
     justify-content: space-around;
     width: 1254px;
 }
 
-.hidden > #explore-top {
+/* .hidden > #explore-top {
     display: none;
-}
+    width: 0;
+} */
 
-#geo-color-legend {
+#geo-color-scale {
     display: block;
     width: 300px;
     height: 20px;
@@ -186,7 +234,7 @@ header i {
     justify-content: space-around;
     align-items: center;
     /* margin-top: 20px; */
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
 }
 
 .states {
@@ -198,9 +246,13 @@ header i {
     margin-right: 30px;
 }
 
-#guess-page {
+/* #guess-page { */
+.guess-page {
     display: flex;
-    justify-content: space-around;
+    /* justify-content: space-around; */
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
 }
 
 .guess-page-left {
@@ -241,7 +293,7 @@ header i {
 
 .guess-page-right {
     width: 750px;
-    height: 690px;
+    height: 620px;
     display: flex;
     justify-content: space-between;
     /* flex-direction: column; */
@@ -250,7 +302,7 @@ header i {
 
 .drop-elements {
     width: 300px;
-    height: 690px;
+    height: 620px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -259,7 +311,7 @@ header i {
 
 .drag-elements {
     width: 450px;
-    height: 690px;
+    height: 620px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -334,4 +386,22 @@ footer > div {
 .google-ref > img {
     height: 50px;
     margin-left: 10px;
+}
+
+
+
+
+
+/* STYLING FOR HIDDEN ELEMENTS
+    NEEDS TO BE LAST SO IT OVERRIDES OTHER DISPLAY STYLES
+    (LIKE DISPLAY: FLEX)
+    NOTE: Other styles should be applied on class selectors,
+    NOT ID selectors (otherwise those styles will override this one)
+ */
+.hidden,
+.hidden > div,
+.hidden > div > div {
+    display: none;
+    width: 0;
+    height: 0;
 }

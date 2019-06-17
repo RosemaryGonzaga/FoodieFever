@@ -19,7 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const pages = document.getElementsByClassName("page");
             Array.from(pages).forEach(page => { // pages is an HTMLCollection, not a true array
                 if (page.id === idName) {       
-                    page.className = "page";    // remove "hidden" from class name to reveal the page and its contents
+                    // page.className = "page";    // remove "hidden" from class name to reveal the page and its contents
+                    page.className = `${idName} page`;    // remove "hidden" from class name to reveal the page and its contents
                 } else {
                     if (!page.className.includes("hidden")) {
                         page.className += " hidden" // hide all other pages

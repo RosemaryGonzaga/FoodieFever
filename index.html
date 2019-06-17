@@ -17,6 +17,34 @@
 </head>
 
 <body>
+    <script>
+        // Drag-and-drop handlers
+        // Why do these need to be defined here?
+        // They don't seem to work when imported with the rest of the JS from the bundle file
+        function dragStartHandler(e) {
+            e.dataTransfer.setData("text/plain", e.target.innerHTML);
+            e.dataTransfer.dropEffect = "move";
+            // e.currentTarget.style.border = "dashed";
+            // console.log(e.target.innerHTML === "beef");
+            // debugger
+        }
+
+        function dragoverHandler(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = "move";
+            // console.log(e);
+            // debugger
+        }
+
+        function dropHandler(e) {
+            e.preventDefault();
+            let data = e.dataTransfer.getData("text/plain");
+            // console.log(e);
+            // debugger
+            e.target.innerHTML = data;
+        }
+    </script>
+
     <header>
         <div class="header-title">
             <h1>Foodie Fever </h1>
@@ -92,15 +120,15 @@
             <div class="guess-page-right">
                 <div class="drop-elements">
                     <div>Drop your guess here</div>
-                    <div class="drop-boxes">?</div>
-                    <div class="drop-boxes">?</div>
-                    <div class="drop-boxes">?</div>
+                    <div class="drop-boxes" ondrop="dropHandler(event);" ondragover="dragoverHandler(event);" id="beef">?</div>
+                    <div class="drop-boxes" ondrop="dropHandler(event);" ondragover="dragoverHandler(event);" id="chicken">?</div>
+                    <div class="drop-boxes" ondrop="dropHandler(event);" ondragover="dragoverHandler(event);" id="turkey">?</div>
                 </div>
                 <div class="drag-elements">
                     <div>Drag your guess to the matching graph</div>
-                    <div class="drag-boxes">turkey</div>
-                    <div class="drag-boxes">chicken</div>
-                    <div class="drag-boxes">beef</div>
+                    <div class="drag-boxes" draggable="true" ondragstart=dragStartHandler(event);>turkey</div>
+                    <div class="drag-boxes" draggable="true" ondragstart=dragStartHandler(event);>chicken</div>
+                    <div class="drag-boxes" draggable="true" ondragstart=dragStartHandler(event);>beef</div>
                 </div>
             </div>
         </section>

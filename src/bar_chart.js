@@ -4,7 +4,7 @@ export const renderBarChart = (dataset, food, fillColor, setFoodCB) => {
     // const height = 350;
     let height = 300;
     if (["beef", "chicken", "turkey"].includes(food)) {
-        height = 210;
+        height = 180;
     } 
 
     const padding = 20;

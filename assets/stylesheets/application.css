@@ -30,7 +30,7 @@ header {
     top: 0;
     left: 0;
     right: 0;
-    height: 80px;
+    height: 74px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -43,13 +43,14 @@ header > .header-title {
 }
 
 header h1 {
-    font-size: 28px;
-    font-weight: 500;
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 28px;
 }
 
-header h2 {
+/* header h2 {
     line-height: 26px;
-}
+} */
 
 header > nav {
     font-size: 20px;
@@ -193,7 +194,8 @@ header i {
     justify-content: space-around;
     align-items: center;
     width: 100vw;
-    height: 700px;
+    /* height: 700px; */
+    height: 600px;
 }
 
 /* #explore-title { */
@@ -293,7 +295,8 @@ header i {
 
 .guess-page-right {
     width: 750px;
-    height: 620px;
+    /* height: 620px; */
+    height: 600px;
     display: flex;
     justify-content: space-between;
     /* flex-direction: column; */
@@ -302,7 +305,7 @@ header i {
 
 .drop-elements {
     width: 300px;
-    height: 620px;
+    height: 600px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -311,7 +314,7 @@ header i {
 
 .drag-elements {
     width: 450px;
-    height: 620px;
+    height: 600px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -358,11 +361,12 @@ footer {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 80px;
+    height: 58px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: #58585a;
+    font-size: 16px;
 }
 
 footer > div {
@@ -379,12 +383,12 @@ footer > div {
     font-style: normal;
     font-weight: 200;
     color: #58585a;
-    font-size: 24px;
+    font-size: 18px;
     margin-left: 20px;
 }
 
 .google-ref > img {
-    height: 50px;
+    height: 40px;
     margin-left: 10px;
 }
 

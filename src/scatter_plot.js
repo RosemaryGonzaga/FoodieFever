@@ -1,8 +1,8 @@
 export const renderScatterPlot = dataset => {
 
-    const width = 700;
+    const width = 680;
     const height = 400;
-    const padding = 40;
+    const padding = 80;
 
     let svg = d3.select(".scatter-plot-container").append("svg")
         .attr("width", width)
@@ -16,7 +16,7 @@ export const renderScatterPlot = dataset => {
             .range([padding, width - padding]);
         let yScale = d3.scaleLinear()
             .domain([0, 100])
-            .range([height - padding, padding]);
+            .range([height - (padding / 2), padding / 2]);
 
         // Define axes based on x & y scales
         let xAxis = d3.axisBottom(xScale);
@@ -25,12 +25,24 @@ export const renderScatterPlot = dataset => {
         // Render axes onto DOM
         svg.append("g")
             .attr("class", "axis")
-            .attr("transform", "translate(0," + (height - padding) + ")")
+            .attr("transform", "translate(0," + (height - (padding / 2)) + ")")
             .call(xAxis);
         svg.append("g")
             .attr("class", "axis")
             .attr("transform", "translate(" + padding + ", 0)")
             .call(yAxis);
+        svg.append("text")
+            .attr("text-anchor", "middle")
+            .attr("transform", "translate(" + (padding / 2) + "," + (height / 2) + ")rotate(-90)")
+            .text("Normalized search volume (% of highest value)")
+            .style("font-size", "12px")
+            .style("margin-bottom", "35px");
+        svg.append("text")
+            .attr("text-anchor", "middle")
+            // .attr("transform", "translate(" + width / 2 + "," + (height-(padding/4)) + ")")
+            .attr("transform", "translate(" + width / 2 + "," + height + ")")
+            .text("Year")
+            .style("font-size", "12px");
 
         // Tag and combine tabasco & sriracha data for scatterplot overlay
         // Note: It didn't work when I tried to append first one column's data (tabasco),

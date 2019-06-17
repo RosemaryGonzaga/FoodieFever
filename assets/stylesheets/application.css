@@ -200,6 +200,7 @@ header i {
 
 /* #explore-title { */
 .explore-title {
+    margin-top: 10px;
     font-size: 32px;
     font-weight: 1000;
 }
@@ -235,6 +236,8 @@ header i {
 .slider-note {
     width: 435px;
     font-size: 16px;
+    text-align: center;
+    padding-top: 20px;
 }
 
 
@@ -257,11 +260,18 @@ header i {
     height: 20px;
     background: linear-gradient(to right, #009392, #39B185, #9CCB86, #E9E29C, #EEB479, #E88471, #CF597E);
     border-radius: 10px;
-    /* margin-right: 100px; */
+    margin-left: 120px;
+}
+
+#range {
+    margin-right: 160px;
+    font-size: 28px;
+    font-weight: 600;
 }
 
 #slider-container > input {
-    width: 250px;
+    width: 280px;
+    margin-right: 150px;
     /* margin-left: 100px; */
 }
 
@@ -279,7 +289,7 @@ header i {
 }
 
 #scatter-plot-container {
-    margin-right: 30px;
+    margin-left: 50px;
 }
 
 /* #guess-page { */

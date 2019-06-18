@@ -304,6 +304,7 @@ header i {
 .guess-page-left {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -342,26 +343,50 @@ header i {
     /* height: 620px; */
     height: 600px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: space-around;
     /* flex-direction: column; */
     align-items: center;
+    margin-top: 15px;
+}
+
+.guess-blurb {
+    width: 590px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    font-size: 18px;
+}
+
+.guess-blurb-2 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.drag-and-drop {
+    display: flex;
+    justify-content: space-between;
+    /* margin-top: 5px; */
 }
 
 .drop-elements {
     width: 300px;
-    height: 600px;
+    height: 360px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
 }
 
 .drag-elements {
     width: 450px;
-    height: 600px;
+    height: 360px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -396,6 +421,14 @@ header i {
     padding-top: 8px;
 }
 
+.guess-submit {
+    font-weight: 800;
+    color: #277c8e;
+}
+
+.guess-submit:hover {
+    cursor: pointer;
+}
 
 
 

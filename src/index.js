@@ -30,6 +30,42 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     };
 
+    // Add event listener for guessing game submit "button"
+    const guessSubmit = document.getElementById("guess-submit");
+    guessSubmit.addEventListener("click", scoreGuesses);
+
+    function scoreGuesses() {
+        let numCorrect = 0;
+        let targetNum = 0;
+        const guesses = document.getElementsByClassName("drop-boxes");
+        Array.from(guesses).forEach(guess => {
+            // console.log(numCorrect);
+            // console.log(guess);
+            // debugger
+            if (guess.innerHTML === guess.id) {
+                numCorrect++;
+            }
+            targetNum++;
+        });
+        if (numCorrect === targetNum) {
+            displayWinModal();
+        } else {
+            displayTryAgainModal();
+        }
+    }
+
+    function displayWinModal() {
+        // let link = "https://trends.google.com/trends/explore?date=all&geo=US&q=beef,beef%20-%20corned";
+        let message = "You won! Why do you suppose searches for 'beef' spike in March? Hint: Go to Google Trends and compare 'beef' with 'beef - corned'"
+        window.alert(message)    // temporary ... need to make an actual modal
+    }
+
+    function displayTryAgainModal() {
+        let message = "Try again"
+        window.alert(message)   // temporary ... need to make an actual modal
+    }
+
+
 
     // Years for time slider
     const year = [

@@ -122,17 +122,26 @@
             </div>
             
             <div class="guess-page-right">
-                <div class="drop-elements">
-                    <div>Drop your guess here</div>
-                    <div class="drop-boxes" ondrop="dropHandler(event);" ondragover="dragoverHandler(event);" id="beef">?</div>
-                    <div class="drop-boxes" ondrop="dropHandler(event);" ondragover="dragoverHandler(event);" id="chicken">?</div>
-                    <div class="drop-boxes" ondrop="dropHandler(event);" ondragover="dragoverHandler(event);" id="turkey">?</div>
+                <div class="guess-blurb">
+                    <div class="guess-blurb-1">Each bar graph represents seasonal fluctuations in search volume for a given food</div>
+                    <div class="guess-blurb-2">Can you match each food to its corresponding graph?</div>
+                    <div class="guess-blurb-3">Hint: Look at each graph's peaks</div>
                 </div>
-                <div class="drag-elements">
-                    <div>Drag your guess to the matching graph</div>
-                    <div class="drag-boxes" draggable="true" ondragstart=dragStartHandler(event);>turkey</div>
-                    <div class="drag-boxes" draggable="true" ondragstart=dragStartHandler(event);>chicken</div>
-                    <div class="drag-boxes" draggable="true" ondragstart=dragStartHandler(event);>beef</div>
+                <div class="drag-and-drop">
+                    <div class="drop-elements">
+                        <div class="drop-boxes" ondrop="dropHandler(event);" ondragover="dragoverHandler(event);" id="beef">?</div>
+                        <div class="drop-boxes" ondrop="dropHandler(event);" ondragover="dragoverHandler(event);" id="chicken">?</div>
+                        <div class="drop-boxes" ondrop="dropHandler(event);" ondragover="dragoverHandler(event);" id="turkey">?</div>
+                    </div>
+                    <div class="drag-elements">
+                        <div class="drag-boxes" draggable="true" ondragstart=dragStartHandler(event);>turkey</div>
+                        <div class="drag-boxes" draggable="true" ondragstart=dragStartHandler(event);>chicken</div>
+                        <div class="drag-boxes" draggable="true" ondragstart=dragStartHandler(event);>beef</div>
+                    </div>
+                </div>
+                <div class="guess-check">
+                    <span>To check your guess, click</span>
+                    <span class = "guess-submit" id="guess-submit">here</span>
                 </div>
             </div>
         </section>

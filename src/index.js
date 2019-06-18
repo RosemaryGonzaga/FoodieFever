@@ -55,17 +55,51 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function displayWinModal() {
-        // let link = "https://trends.google.com/trends/explore?date=all&geo=US&q=beef,beef%20-%20corned";
-        let message = "You won! Why do you suppose searches for 'beef' spike in March? Hint: Go to Google Trends and compare 'beef' with 'beef - corned'"
-        window.alert(message)    // temporary ... need to make an actual modal
+        let message1 = "You won!";
+        let message2 = "Try a different comparison from the menu.";
+
+        // need to factor this out later when I add other food comparisons
+        let message3 = "Why do you suppose searches for 'beef' spike in March?";
+        let message4 = "Hint: Go to Google Trends and ";
+        let linkText = "compare 'beef' with 'beef - corned'";
+        let linkHref = "https://trends.google.com/trends/explore?date=all&geo=US&q=beef,beef%20-%20corned";
+        // window.alert(message1)    // temporary ... need to make an actual modal
+
+        document.getElementById("modal-msg1").textContent = message1;
+        document.getElementById("modal-msg2").textContent = message2;
+        document.getElementById("modal-msg3").textContent = message3;
+        document.getElementById("modal-msg4").textContent = message4;
+        let link = document.getElementById("modal-link");
+        link.setAttribute("href", linkHref);
+        link.textContent = linkText;
+
+        const winModal = document.getElementById("guess-modal");
+        winModal.classList.remove("hidden");
     }
 
     function displayTryAgainModal() {
-        let message = "Try again"
-        window.alert(message)   // temporary ... need to make an actual modal
+        let message1 = "Try again :)";
+        // window.alert(message1)   // temporary ... need to make an actual modal
+        
+        document.getElementById("modal-msg1").textContent = message1;
+        const tryAgainModal = document.getElementById("guess-modal");
+        tryAgainModal.classList.remove("hidden");
+    }
+
+    // Add event listener to close modal
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    closeModalBtn.addEventListener("click", closeModal);
+
+    function closeModal() {
+        const modal = document.getElementById("guess-modal");
+        modal.classList.add("hidden");
     }
 
 
+    // NOTE TO SELF: This file is getting long... maybe factor out event listeners and then import them?
+    // Also, why is there a blip when the page first loads and the fonts appear different?
+    // Is it because of the time it takes for the map to load behind the scenes?
+    // Maybe only render the map in a setTimeout callback (after 1ms)???
 
     // Years for time slider
     const year = [

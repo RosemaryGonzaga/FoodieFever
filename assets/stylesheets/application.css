@@ -295,8 +295,8 @@ header i {
 /* #guess-page { */
 .guess-page {
     display: flex;
-    /* justify-content: space-around; */
-    justify-content: center;
+    justify-content: space-around;
+    /* justify-content: center; */
     align-items: center;
     width: 100vw;
 }
@@ -339,8 +339,8 @@ header i {
 }
 
 .guess-page-right {
-    width: 750px;
-    /* height: 620px; */
+    /* width: 750px; */
+    height: 620px;
     height: 600px;
     display: flex;
     flex-direction: column;
@@ -359,6 +359,10 @@ header i {
     align-items: center;
     text-align: center;
     font-size: 18px;
+}
+
+.guess-blurb-1 {
+    width: 500px;
 }
 
 .guess-blurb-2 {
@@ -382,7 +386,8 @@ header i {
 }
 
 .drag-elements {
-    width: 450px;
+    /* width: 450px; */
+    width: 300px;
     height: 360px;
     display: flex;
     flex-direction: column;
@@ -393,7 +398,6 @@ header i {
 .drop-boxes {
     border: 2px dashed gray;
     border-radius: 10px;
-    /* width: 60px; */
     width: 140px;
     height: 40px;
     display: flex;
@@ -428,6 +432,70 @@ header i {
 
 .guess-submit:hover {
     cursor: pointer;
+}
+
+.guess-modal {
+    position: fixed;
+    margin: 0 auto;
+    left: calc(50vw - 300px);
+    z-index: 10;
+    width: 600px;
+    height: 400px;
+    background-color: white;
+    box-shadow: 0 0 20px #277c8e;
+    /* background-color: #440c53; */
+    /* color: white; */
+    /* box-shadow: 0 0 20px #fde724; */
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 20px 40px;
+}
+
+.guess-modal > button {
+    margin-left: 510px;
+    border: none;
+    font-size: 24px;
+}
+
+.guess-modal > button:hover {
+    cursor: pointer;
+}
+
+.guess-modal > button:focus,
+.guess-modal > button:active,
+.guess-modal > button:focus:active {
+    /* margin-left: 510px; */
+    outline: none;
+    background-color: white;
+}
+
+.guess-modal > p {
+    text-align: center;
+}
+
+.guess-modal > p:first-of-type {
+    font-size: 32px;
+    font-weight: 1000px;
+    margin-top: 60px;
+}
+
+.guess-modal-more-msgs {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.guess-modal-more-msgs > p:first-of-type {
+    width: 320px;
+    margin-bottom: 30px;
+}
+
+.guess-modal > div > a {
+    color: #277c8e;
+    /* color: white; */
+    text-align: center;
 }
 
 

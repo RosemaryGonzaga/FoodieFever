@@ -86,7 +86,7 @@ export const renderBarChart = (dataset, food, fillColor, setFoodCB) => {
             .attr("y", height - padding)
             .attr("fill", fillColor)
             .transition()   // note: transition needs to precede any attributes that are to transition (should also BE preceded by initial values)
-            .duration(1000) // hard-coded for now
+            .duration(320) // hard-coded for now...need to coordinate w/ updateYear function
             .attr("height", datum => height - padding - yScale(datum[food]))
             .attr("y", datum => {
                 return yScale(datum[food]);
@@ -95,7 +95,7 @@ export const renderBarChart = (dataset, food, fillColor, setFoodCB) => {
 
         // update data
         const updateBars = (newDataset, delay) => {
-            let duration = 700;
+            let duration = 600; // need to coordinate w/ updateYear function
             d3.selectAll(`.${food}`)    // select by "rect" or class
                 .data(newDataset)
                 .transition()
@@ -112,9 +112,9 @@ export const renderBarChart = (dataset, food, fillColor, setFoodCB) => {
         // ...where it will be invoked along with other callbacks for other foods...
         // ...in the event handler for the play button.
         function animateBars() { // try returning a callback that closes over the nestedData
-            let delay = 1;
+            let delay = 0;
             for (let yr = 2006; yr < 2019; yr++) {
-                updateBars(nestedData[yr], delay * 700);
+                updateBars(nestedData[yr], delay * 700);    // need to coordinate delay amount with the updateYear function
                 delay += 1;
             }
         }

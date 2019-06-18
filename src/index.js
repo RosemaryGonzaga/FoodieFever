@@ -155,14 +155,31 @@ document.addEventListener("DOMContentLoaded", () => {
     const setTurkeyCB = fct => { turkeyCallback = fct; }
     renderBarChart(seasonalDatasetTurkey, "turkey", "#dbe318", setTurkeyCB);    // fill-color: yellow
     
+    // Recursive callback to update year in setTimeout
+    // This seems like a brittle solution; is there a better way?
+    // NOTE: the timing still isn't quite in sync with the bar animation...
+    const updateYear = year => {
+        return () => {
+            // debugger
+            if (year >= 2019) return;
+            let barChartYear = document.getElementById("bar-chart-year");
+            barChartYear.textContent = year;
+            // debugger
+            let delay = 700;
+            setTimeout(updateYear(year + 1), delay);
+        }
+    }
+
     // debugger
     d3.select("#play-bar-chart-animation-btn").on("click", () => {
+        let playBtn = document.getElementById("play-bar-chart-animation-btn");
+        playBtn.setAttribute("disabled", "true");
+        setTimeout(() => playBtn.removeAttribute("disabled"), 8735);    // hard-coded the delay - how to make it more dynamic?
+        setTimeout(updateYear(2006), 325);  // the delay here is also hard-coded and may depend on external factors...
         beefCallback();
         chickenCallback();
         turkeyCallback();
     });
-
-
 });
 
 

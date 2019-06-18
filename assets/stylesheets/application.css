@@ -267,6 +267,10 @@ header i {
     margin-right: 160px;
     font-size: 28px;
     font-weight: 600;
+    /* Need to give this a fixed width and display inline-block 
+    so the width doesn't change while the innerHTML (year) changes along with the slider input */
+    width: 65px;
+    display: inline-block;
 }
 
 #slider-container > input {
@@ -311,10 +315,20 @@ header i {
 .bar-chart-header {
     margin-top: 15px;
     display: flex;
-    justify-content: space-between;
-    width: 420px;
+    /* space-between makes the surrounding text shift as the years change...
+    ...so I'm commenting it out so the text position remains static...
+    ..another solution is to keep the space-between but fix the width of the...
+    ...element whose innerHTML is dynamically changing */
+    /* justify-content: space-between;  */
+    width: 430px;
     vertical-align: text-bottom;
     line-height: 30px;
+}
+
+.bar-chart-header > button {
+    border: none;
+    background: none;
+    margin: 0 0;
 }
 
 .fa-play-circle {
@@ -330,6 +344,8 @@ header i {
     font-size: 24px;
     font-weight: 800;
     color: #277c8e;
+    margin-left: 8px;
+    /* width: 32px; */
 }
 
 .bar-chart-container {

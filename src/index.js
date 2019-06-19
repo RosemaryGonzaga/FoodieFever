@@ -20,12 +20,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
+
     // Add event listeners to nav components (switch to appropriate page)
     const aboutBtn = document.getElementById("about");
     aboutBtn.addEventListener("click", switchPage("welcome-page"));
 
-    const exploreBtn = document.getElementById("explore");
-    exploreBtn.addEventListener("click", switchPage("explore-page"));
+    // const exploreBtn = document.getElementById("explore");
+    // exploreBtn.addEventListener("click", switchPage("explore-page"));
 
     const guessBtn = document.getElementById("guess");
     guessBtn.addEventListener("click", switchPage("guess-page"));
@@ -45,6 +46,34 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         };
     };
+
+
+    // Add event listeners for nav bar dropdown menus: mouseenter (or mouseover); mouseleave (or mouseout)
+    const exploreMenuParent = document.getElementById("explore");
+    exploreMenuParent.addEventListener("mouseenter", toggleDropdown("geoDropdown"));
+    exploreMenuParent.addEventListener("mouseleave", toggleDropdown("geoDropdown"));
+    // exploreMenuParent.addEventListener("mouseout", toggleDropdown("geoDropdown"));
+
+    function toggleDropdown(dropdownName) {
+        return () => {
+            const geoDropdown = document.getElementById(dropdownName);
+            geoDropdown.classList.toggle("hidden");
+        }
+    }
+
+    // Add event listeners for click on dropdown menu selection
+    const showSriracha = document.getElementById("show-sriracha");
+    showSriracha.addEventListener("click", () => {
+        toggleGeoMap("tabasco", "sriracha");
+        switchPage("explore-page")();   // need to invoke this callback b/c it was defined to return a function
+    });
+
+    const showMoscowMule = document.getElementById("show-moscow-mule");
+    showMoscowMule.addEventListener("click", () => {
+        toggleGeoMap("bloodyMary", "moscowMule");
+        switchPage("explore-page")();   // need to invoke this callback b/c it was defined to return a function
+    });
+
 
     // Add event listener for guessing game submit "button"
     const guessSubmit = document.getElementById("guess-submit");

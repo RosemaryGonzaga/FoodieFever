@@ -57,12 +57,16 @@ header > nav {
     width: 550px;
     display: flex;
     justify-content: space-between;
+    height: 60px;
+    align-items: center;
 }
 
 header > nav > div {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+    height: 60px;
 }
 
 header > nav > div:hover {
@@ -82,6 +86,30 @@ header > nav > div:hover {
     margin-top: 4px;
     /* line-height: 34px; */
 }
+
+.explore {
+    position: relative;
+}
+
+.geoDropdown {
+    position: absolute;
+    top: 60px;
+    z-index: 11;
+    box-shadow: 0 0 5px gray;
+    background: white;
+}
+
+.geoDropdown > p {
+    border-bottom: 1px solid lightgray;
+    height: 30px;
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    padding: 4px 14px;
+}
+
+
+/* Header - right: personal link icons */
 
 header > .link-icons {
     margin-right: 20px;

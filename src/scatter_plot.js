@@ -6,7 +6,8 @@ export const renderScatterPlot = dataset => {
 
     let svg = d3.select(".scatter-plot-container").append("svg")
         .attr("width", width)
-        .attr("height", height);
+        .attr("height", height)
+        .attr("class", "scatter-plot-svg"); // added this so I can select it and remove it later
     
     d3.csv(dataset).then(data => {
         let [_, food1, food2] = data.columns;   // new code - factoring out some hard-coded values
@@ -69,6 +70,7 @@ export const renderScatterPlot = dataset => {
             .data(taggedCombinedData)
             .enter()
             .append("circle")
+            // .attr("class", "dots")
             .attr("cx", (datum) => {
                 return xScale(new Date(datum.Month))
             })
@@ -133,3 +135,8 @@ export const colorScatterPlot = (year = "2006", food1, food2) => {
         // .transition().duration(150) // may get rid of this; must be in sync with geomap
         .style("fill", selectFillColor);
 }
+
+export const removeScatterPlot = () => {
+    // debugger
+    d3.selectAll(".scatter-plot-svg").remove();
+};

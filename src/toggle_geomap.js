@@ -1,5 +1,5 @@
 import { renderGeoMap, colorGeoMap } from './geomap';
-import { renderScatterPlot, colorScatterPlot } from './scatter_plot';
+import { renderScatterPlot, colorScatterPlot, removeScatterPlot } from './scatter_plot';
 
 export const toggleGeoMap = (food1, food2) => {
 
@@ -12,7 +12,6 @@ export const toggleGeoMap = (food1, food2) => {
     document.getElementById("color-scale-label1").textContent = food1;
     document.getElementById("color-scale-label2").textContent = food2;
     document.getElementById("slider-note-label").textContent = `${food1} and ${food2}`;
-
 
 
     // Dataset dictionary
@@ -33,7 +32,11 @@ export const toggleGeoMap = (food1, food2) => {
     // ...may need a dictionary or to rename data files to faciliate interpolation
     // let geoDataset = "assets/data/sriracha/sriracha_vs_tabasco_geo_trended.csv";
     let geoDataset = datasets.geo[food2];
-    renderGeoMap(geoDataset);
+    // renderGeoMap(geoDataset);
+    colorGeoMap(geoDataset, "2006");
+
+    // Remove any scatter plot that was rendered before
+    removeScatterPlot();
 
     // let temporalDataset = "assets/data/sriracha/sriracha_tabasco_timeline_2006_to_present.csv";
     let temporalDataset = datasets.temporal[food2];

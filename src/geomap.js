@@ -45,17 +45,24 @@ export const colorGeoMap = (dataset, year = "2006") => {
 
     d3.csv(dataset).then(data => {
         const filteredData = data.filter(datum => datum.year === year);
+        // debugger
+        // let food1, food2;
+        // if (data.columns.length === 4) {
+        //     [_, food1, food2, __] = data.columns;  // added this; pick up here
+        // }
+        let [_, food1, food2, __] = data.columns;  // need to check if num cols is 4; if 3, need a sequential rather than divergent color scale
         let searchFreqByState = {};
         filteredData.forEach(datum => {
-            if (datum.sriracha === "0" && datum.tabasco === "0") {
+            // if (datum.sriracha === "0" && datum.tabasco === "0") {
+            if (datum[food1] === "0" && datum[food2] === "0") { // food1 is older (tabasco), food2 is trendier/newer (sriracha)
                 searchFreqByState[datum.Region] = -0.2;
             } else {
-                searchFreqByState[datum.Region] = parseFloat(datum.sriracha);
+                searchFreqByState[datum.Region] = parseFloat(datum[food2]); // food 2 is sriracha
             }
         });
 
         d3.selectAll(".states")
-            // .transition().duration(150) // may get rid of this
+            // .transition().duration(150) // may get rid of this; must be in sync with scatter plot
             .style("fill", d => {
                 let searchFreq = searchFreqByState[d.properties.NAME];
                 return geoColor(searchFreq);

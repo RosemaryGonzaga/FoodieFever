@@ -1,6 +1,8 @@
-import { renderGeoMap, colorGeoMap } from './geomap';
-import { renderScatterPlot, colorScatterPlot } from './scatter_plot';
+// import { renderGeoMap, colorGeoMap } from './geomap';
+// import { renderScatterPlot, colorScatterPlot } from './scatter_plot';
 import { renderBarChart } from './bar_chart';
+import { toggleGeoMap } from './toggle_geomap';
+import { scoreGuesses, closeModal } from './modal.js';
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -34,66 +36,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const guessSubmit = document.getElementById("guess-submit");
     guessSubmit.addEventListener("click", scoreGuesses);
 
-    function scoreGuesses() {
-        let numCorrect = 0;
-        let targetNum = 0;
-        const guesses = document.getElementsByClassName("drop-boxes");
-        Array.from(guesses).forEach(guess => {
-            // console.log(numCorrect);
-            // console.log(guess);
-            // debugger
-            if (guess.innerHTML === guess.id) {
-                numCorrect++;
-            }
-            targetNum++;
-        });
-        if (numCorrect === targetNum) {
-            displayWinModal();
-        } else {
-            displayTryAgainModal();
-        }
-    }
-
-    function displayWinModal() {
-        let message1 = "You won!";
-        let message2 = "Try a different comparison from the menu.";
-
-        // need to factor this out later when I add other food comparisons
-        let message3 = "Why do you suppose searches for 'beef' spike in March?";
-        let message4 = "Hint: Go to Google Trends and ";
-        let linkText = "compare 'beef' with 'beef - corned'";
-        let linkHref = "https://trends.google.com/trends/explore?date=all&geo=US&q=beef,beef%20-%20corned";
-        // window.alert(message1)    // temporary ... need to make an actual modal
-
-        document.getElementById("modal-msg1").textContent = message1;
-        document.getElementById("modal-msg2").textContent = message2;
-        document.getElementById("modal-msg3").textContent = message3;
-        document.getElementById("modal-msg4").textContent = message4;
-        let link = document.getElementById("modal-link");
-        link.setAttribute("href", linkHref);
-        link.textContent = linkText;
-
-        const winModal = document.getElementById("guess-modal");
-        winModal.classList.remove("hidden");
-    }
-
-    function displayTryAgainModal() {
-        let message1 = "Try again :)";
-        // window.alert(message1)   // temporary ... need to make an actual modal
-        
-        document.getElementById("modal-msg1").textContent = message1;
-        const tryAgainModal = document.getElementById("guess-modal");
-        tryAgainModal.classList.remove("hidden");
-    }
-
     // Add event listener to close modal
     const closeModalBtn = document.getElementById("close-modal-btn");
     closeModalBtn.addEventListener("click", closeModal);
 
-    function closeModal() {
-        const modal = document.getElementById("guess-modal");
-        modal.classList.add("hidden");
-    }
+
 
 
     // NOTE TO SELF: This file is getting long... maybe factor out event listeners and then import them?
@@ -101,32 +48,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // Is it because of the time it takes for the map to load behind the scenes?
     // Maybe only render the map in a setTimeout callback (after 1ms)???
 
-    // Years for time slider
-    const year = [
-        "2006", "2007", "2008", 
-        "2009", "2010", "2011", 
-        "2012", "2013", "2014", 
-        "2015", "2016", "2017", 
-        "2018", "2019"
-    ];
 
-    d3.select("#timeslide").on("input", function () {
-        document.getElementById("range").innerHTML = year[this.value];
-        colorGeoMap(geoDataset, `${year[this.value]}`);
-        colorScatterPlot(`${year[this.value]}`);
-    });
+    // maybe set up object with arrays to keep foods in the correct order, then spread them when passing into toggleGeoMap
+    toggleGeoMap("tabasco", "sriracha"); 
 
-    // This dataset should dynamically change based on the comparison selected
-    // (Will prob have a menu allowing users to select food comparison)
-    // Refactor later to assign dataset based on the input value
-    // ...may need a dictionary or to rename data files to faciliate interpolation
-    let geoDataset = "assets/data/sriracha/sriracha_vs_tabasco_geo_trended.csv";
-    renderGeoMap(geoDataset);
-    
-    let temporalDataset = "assets/data/sriracha/sriracha_tabasco_timeline_2004_to_present.csv";
-    renderScatterPlot(temporalDataset);
 
-    
+
     // Data and event listeners for bar graphs (need to add more food comparisons)
     let seasonalDatasetBeef = "assets/data/seasonal/beef.csv";
     let seasonalDatasetChicken = "assets/data/seasonal/chicken.csv";

@@ -320,7 +320,7 @@ header i {
     ..another solution is to keep the space-between but fix the width of the...
     ...element whose innerHTML is dynamically changing */
     /* justify-content: space-between;  */
-    width: 430px;
+    width: 450px;
     vertical-align: text-bottom;
     line-height: 30px;
 }
@@ -331,9 +331,14 @@ header i {
     margin: 0 0;
 }
 
+.bar-chart-header > button:focus {
+    outline: none;
+}
+
 .fa-play-circle {
-    font-size: 28px;
-    color: #277c8e;
+    font-size: 36px;
+    color: orange;
+    /* color: #277c8e; */
 }
 
 .fa-play-circle:hover {
@@ -341,8 +346,9 @@ header i {
 }
 
 #bar-chart-year {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 800;
+    /* color: orange; */
     color: #277c8e;
     margin-left: 8px;
     /* width: 32px; */
@@ -443,7 +449,8 @@ header i {
 
 .guess-submit {
     font-weight: 800;
-    color: #277c8e;
+    color: orange;
+    /* color: #277c8e; */
 }
 
 .guess-submit:hover {

@@ -9,7 +9,8 @@ export const renderScatterPlot = dataset => {
         .attr("height", height);
     
     d3.csv(dataset).then(data => {
-
+        let [_, food1, food2] = data.columns;   // new code - factoring out some hard-coded values
+        // debugger
         // Define x & y scales based on dataset
         let xScale = d3.scaleTime()
             .domain([new Date(2006, 0, 1), new Date(2019, 0, 6)])
@@ -51,15 +52,17 @@ export const renderScatterPlot = dataset => {
         // ...same size and therefore not registering an enter selection.
         // ...This implementation is a workaround that selects, joins, and appends both datasets at the same time.
         // POTENTIAL REFACTOR LATER: PASS IN VARIABLES (instead of "tabasco", "sriracha")
-        let tabascoData = data.map(datum => {
-            let newRow = Object.assign({}, { Month: datum.Month, tabasco: datum.tabasco });
+        let food1Data = data.map(datum => {   // food1 = tabasco
+            // debugger
+            // let newRow = Object.assign({}, { Month: datum.Month, tabasco: datum.tabasco });     // food1 = tabasco
+            let newRow = Object.assign({}, { Month: datum.Month, [food1]: datum[food1] });     // food1 = tabasco
             return newRow;
         });
-        let srirachaData = data.map(datum => {
-            let newRow = Object.assign({}, { Month: datum.Month, sriracha: datum.sriracha });
+        let food2Data = data.map(datum => {  // food2 = sriracha
+            let newRow = Object.assign({}, { Month: datum.Month, [food2]: datum[food2] });   // food2 = sriracha
             return newRow;
         });
-        let taggedCombinedData = tabascoData.concat(srirachaData);
+        let taggedCombinedData = food1Data.concat(food2Data);  // food1 = tabasco, food2 = sriracha
 
         // Render data as circles on the chart
         svg.selectAll("circle")
@@ -70,44 +73,63 @@ export const renderScatterPlot = dataset => {
                 return xScale(new Date(datum.Month))
             })
             .attr("cy", datum => {
-                if (datum.tabasco !== undefined) {
-                    return yScale(datum.tabasco)
-                } else if (datum.sriracha !== undefined) {
-                    return yScale(datum.sriracha)
+                // if (datum.tabasco !== undefined) {          // food1 = tabasco
+                //     return yScale(datum.tabasco)            // food1 = tabasco
+                // } else if (datum.sriracha !== undefined) {  // food2 = sriracha
+                //     return yScale(datum.sriracha)           // food2 = sriracha
+                // }
+                if (datum[food1] !== undefined) {          // food1 = tabasco
+                    return yScale(datum[food1])            // food1 = tabasco
+                } else if (datum[food2] !== undefined) {  // food2 = sriracha
+                    return yScale(datum[food2])           // food2 = sriracha
                 }
             })
             .attr("r", "5")
             .attr("fill", datum => {
-                if (datum.tabasco !== undefined) {
+                // if (datum.tabasco !== undefined) {          // food1 = tabasco
+                //     return "#9CCB86";   // light green
+                // } else if (datum.sriracha !== undefined) {  // food2 = sriracha
+                //     return "#EEB479";   // orange
+                // }
+                if (datum[food1] !== undefined) {          // food1 = tabasco
                     return "#9CCB86";   // light green
-                } else if (datum.sriracha !== undefined) {
+                } else if (datum[food2] !== undefined) {  // food2 = sriracha
                     return "#EEB479";   // orange
                 }
             });
-        colorScatterPlot();
+        // colorScatterPlot();
+        colorScatterPlot("2006", food1, food2);
     });
 }
 
-export const colorScatterPlot = (year = "2006") => {
+export const colorScatterPlot = (year = "2006", food1, food2) => {
     const selectFillColor = datum => {
+        // let [_, food1, food2] = Object.keys(datum);
+        // debugger
         // let datumYr = datum.Month.split("-")[0];
         let [datumYr] = datum.Month.split("-"); // try out some JS array destructuring
         if (datumYr === year) {
-            if (datum.tabasco !== undefined) {
+            // if (datum.tabasco !== undefined) {          // food1 = tabasco
+            //     return "#009392";   // dark green
+            // } else if (datum.sriracha !== undefined) {  // food2 = sriracha
+            //     return "#CF597E";   // red
+            // }
+            // debugger
+            if (datum[food1] !== undefined) {          // food1 = tabasco
                 return "#009392";   // dark green
-            } else if (datum.sriracha !== undefined) {
+            } else if (datum[food2] !== undefined) {  // food2 = sriracha
                 return "#CF597E";   // red
             }
         } else {
-            if (datum.tabasco !== undefined) {
+            if (datum[food1] !== undefined) {          // food1 = tabasco
                 return "#9CCB86";   // light green
-            } else if (datum.sriracha !== undefined) {
+            } else if (datum[food2] !== undefined) {  // food2 = sriracha
                 return "#EEB479";   // orange
             }
         }
     };
 
     d3.selectAll("circle")
-        .transition().duration(150) // may get rid of this
+        // .transition().duration(150) // may get rid of this; must be in sync with geomap
         .style("fill", selectFillColor);
 }

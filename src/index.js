@@ -47,7 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // ...ultimately I want to call these functions when a user selects a different trend (food comparison) from a dropdown menu...
     // ...I'll invoke these with variables in the event listener callbacks
    
-    toggleGeoMap("tabasco", "sriracha");
+    // toggleGeoMap("tabasco", "sriracha");
+    toggleGeoMap("bloodyMary", "moscowMule");
     
     toggleBarChart();   // for later: pass in the specific food items like I did with toggleGeoMap
     

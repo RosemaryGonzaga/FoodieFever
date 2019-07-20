@@ -3,7 +3,7 @@
 
 [Live site](http://www.rosemarygonzaga.com/FoodieFever/#)
 
-![FoodieFever](https://github.com/RosemaryGonzaga/FoodieFever/tree/master/assets/images/foodie_fever.png)
+![FoodieFever](https://github.com/RosemaryGonzaga/FoodieFever/raw/master/assets/images/foodie_fever.png)
 
 ## Background and Overview
 Google Trends provides a wealth of data ripe for analysis. This project aims to leverage that data to chart the course of various food trends of the past decade or so, as gauged by internet search volume.
@@ -42,7 +42,7 @@ Data are exported as CSV files and stored locally from Google Trends, with a foc
 
 ## Feature Spotlight: Interactive and dynamic choropleth (geographic heat map)
 
-![Interactive Choropleth](https://github.com/RosemaryGonzaga/FoodieFever/tree/master/assets/images/geo_trends.gif)
+![Interactive Choropleth](https://github.com/RosemaryGonzaga/FoodieFever/raw/master/assets/images/geo_trends.gif)
 
 My first challenge in implementing this feature arose when I initially tested the time slider element, and found that the data would take too long to re-render every time the time slider's input changed. This issue noticeably affected user experience, as the page would go blank for a few seconds while re-rendering the map.
 
@@ -129,7 +129,7 @@ d3.select("#timeslide").on("input", function () {
 
 ## Feature Spotlight: Drag-and-drop guessing game
 
-![Interactive Choropleth](https://github.com/RosemaryGonzaga/FoodieFever/tree/master/assets/images/geo_trends.gif)
+![Interactive Choropleth](https://github.com/RosemaryGonzaga/FoodieFever/raw/master/assets/images/guessing_game.gif)
 
 I wanted users to take a more active role in thinking about what different data patterns mean, and what stories they might tell. To that end, I used HTML5's drag-and-drop API to incorporate some gamification into my visualization.
 
@@ -171,7 +171,7 @@ I wanted users to take a more active role in thinking about what different data 
 
 ## Feature Spotlight: Animated bar charts
 
-![D3 animations](https://github.com/RosemaryGonzaga/FoodieFever/tree/master/assets/images/bar_chart_animation.gif)
+![D3 animations](https://github.com/RosemaryGonzaga/FoodieFever/raw/master/assets/images/bar_chart_animation.gif)
 
 The bar charts that form part of the guessing game provide a static representation various foods' seasonality (as measured by monthly relative search volume). In order to make the visualization more dynamic and incorporate another dimension into the temporal analysis, I used D3 animations to make year-by-year updates to the data in each bar graph.
 
